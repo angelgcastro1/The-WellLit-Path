@@ -97,6 +97,9 @@ html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
 @media (min-width:1081px){
   .hero-shot{will-change:transform}
 }
+@media (max-width:1080px) and (min-width:601px){
+  .hero-dark-in{min-height:84vh;min-height:84svh}
+}
 @media (max-width:1080px){
   /* every full-screen fixed layer costs iOS compositing budget while scrolling */
   body::before{display:none}
@@ -865,7 +868,7 @@ header.nav.onDark:not(.scrolled) .nav-links a.nav-cta:hover{
       radial-gradient(60% 30% at 62% 22%, rgba(226,163,92,.20), transparent 70%);
   }
   .hero-dark::after{background:none}
-  .hero-dark-in{min-height:100vh;min-height:100svh;padding-top:46vh;padding-bottom:clamp(44px,9vh,84px)}
+  .hero-dark-in{min-height:86vh;min-height:86svh;padding-top:40vh;padding-bottom:clamp(36px,7vh,68px)}
   .help-grid{grid-template-columns:1fr}
   .help-copy{padding:clamp(52px,8vw,80px) var(--gut)}
   .help-art{min-height:280px}
@@ -1114,6 +1117,9 @@ body[data-page="contact"] footer > .torn.top{display:none}
 /* ═══ nav: burger menu on tablet and below ═══ */
 @media (min-width:1081px){
   .hero-shot{will-change:transform}
+}
+@media (max-width:1080px) and (min-width:601px){
+  .hero-dark-in{min-height:84vh;min-height:84svh}
 }
 @media (max-width:1080px){
   /* every full-screen fixed layer costs iOS compositing budget while scrolling */
@@ -2184,6 +2190,7 @@ body[data-page="contact"] footer > .torn.top{display:none}
       var isHero = function(el){ return !!el.closest('.hero'); };
       // scrubbed parallax is the most expensive thing on the page — desktop only
       var PARALLAX = window.innerWidth > 1080 && !REDUCED;
+      var TOUCH = window.innerWidth <= 1080;   // shorter, cheaper intro on phones/tablets
 
       /* eyebrows */
       gsap.utils.toArray(page.querySelectorAll('[data-fx="eyebrow"]')).forEach(function(el){
@@ -2209,8 +2216,8 @@ body[data-page="contact"] footer > .torn.top{display:none}
         gsap.from(el, {
           opacity:0, y:26, duration:1, ease:'power3.out',
           delay: isHero(el) ? (el.classList.contains('values') ? 0 :
-                 el.classList.contains('lede') ? 1.55 :
-                 el.classList.contains('hero-cta') ? 1.72 : .55) : 0,
+                 el.classList.contains('lede') ? (TOUCH ? .9 : 1.55) :
+                 el.classList.contains('hero-cta') ? (TOUCH ? 1.02 : 1.72) : (TOUCH ? .35 : .55)) : 0,
           scrollTrigger: isHero(el) ? null : {trigger:el, start:'top 90%'}
         });
       });
@@ -2230,7 +2237,8 @@ body[data-page="contact"] footer > .torn.top{display:none}
 
       /* hero photograph — slow layer */
       gsap.utils.toArray(page.querySelectorAll('[data-fx="shot"]')).forEach(function(el){
-        gsap.from(el, {opacity:0, scale:1.07, duration:2.2, ease:'power3.out'});
+        if (TOUCH) gsap.from(el, {opacity:0, duration:.7, ease:'power2.out'});
+        else gsap.from(el, {opacity:0, scale:1.07, duration:2.2, ease:'power3.out'});
         if (PARALLAX) gsap.to(el, {yPercent:-9, force3D:true, ease:'none',
           scrollTrigger:{trigger:'.hero-dark', start:'top top', end:'bottom top', scrub:true}});
       });
@@ -2255,7 +2263,8 @@ body[data-page="contact"] footer > .torn.top{display:none}
           hh.dataset.sw = '1';
         }
         gsap.from(hh.querySelectorAll('.wd > span'), {
-          yPercent:120, duration:1.15, ease:'power4.out', stagger:.055, delay:.3
+          yPercent:120, duration:TOUCH?.8:1.15, ease:'power4.out',
+          stagger:TOUCH?.035:.055, delay:TOUCH?.12:.3
         });
       }
 
@@ -2265,15 +2274,15 @@ body[data-page="contact"] footer > .torn.top{display:none}
         var oi = orn.querySelectorAll('i'), osvg = orn.querySelector('svg');
         gsap.set(oi, {scaleX:0});
         gsap.set(osvg, {scale:0, rotate:-24, transformOrigin:'50% 70%'});
-        gsap.to(oi,   {scaleX:1, duration:1, ease:'power3.inOut', delay:1.0});
-        gsap.to(osvg, {scale:1, rotate:0, duration:.85, ease:'back.out(2)', delay:1.12});
+        gsap.to(oi,   {scaleX:1, duration:TOUCH?.7:1, ease:'power3.inOut', delay:TOUCH?.5:1.0});
+        gsap.to(osvg, {scale:1, rotate:0, duration:TOUCH?.6:.85, ease:'back.out(2)', delay:TOUCH?.58:1.12});
       }
 
       /* values row — dots draw, labels lift */
       var vals = page.querySelector('.values');
       if (vals){
-        gsap.from(vals.querySelectorAll('span'), {opacity:0, y:12, duration:.7, ease:'power3.out', stagger:.07, delay:1.35});
-        gsap.from(vals.querySelectorAll('i'), {scale:0, duration:.5, ease:'back.out(2.4)', stagger:.07, delay:1.45});
+        gsap.from(vals.querySelectorAll('span'), {opacity:0, y:12, duration:.7, ease:'power3.out', stagger:TOUCH?.05:.07, delay:TOUCH?.72:1.35});
+        gsap.from(vals.querySelectorAll('i'), {scale:0, duration:.5, ease:'back.out(2.4)', stagger:TOUCH?.05:.07, delay:TOUCH?.8:1.45});
       }
 
       /* value pillars */
