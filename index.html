@@ -72,8 +72,24 @@ html{-webkit-text-size-adjust:100%;scroll-behavior:smooth;overflow-x:hidden}
 
 
 /* ═══ nav: burger menu on tablet and below ═══ */
+@media (max-width:1080px){
+  /* a blurred fixed bar repaints continuously while scrolling */
+  header.nav{backdrop-filter:none;-webkit-backdrop-filter:none;background:rgba(250,243,236,.96)}
+  header.nav.onDark:not(.scrolled){background:linear-gradient(180deg,rgba(9,17,12,.55),rgba(9,17,12,0))}
+  header.nav::after{display:none}
+}
 @media (max-width:1000px){
-  .burger{display:flex}
+  .burger{display:flex;position:absolute;right:var(--gut);top:50%;transform:translateY(-50%);margin:0}
+  .nav-in{position:relative}
+  .brand{transition:transform .5s cubic-bezier(.2,.8,.2,1)}
+  /* scrolled: the lockup grows and slides to centre */
+  header.nav.scrolled .nav-in{padding-top:13px;padding-bottom:13px}
+  header.nav.scrolled .brand img{width:64px;height:64px}
+  header.nav.scrolled .lk-the{font-size:9.5px}
+  header.nav.scrolled .lk-main{font-size:24px}
+  header.nav.scrolled .lk-path b{font-size:11px}
+  header.nav.scrolled .lk-path i{width:19px}
+  header.nav.scrolled .lk-sub{font-size:7.5px}
   .nav-links{
     position:fixed;inset:0 0 auto;top:0;padding:110px var(--gut) 48px;background:var(--paper);
     flex:none;margin-left:0;flex-direction:column;align-items:flex-start;gap:4px;
@@ -100,6 +116,12 @@ html{-webkit-text-size-adjust:100%;scroll-behavior:smooth;overflow-x:hidden}
   .lk-sub{font-size:6.5px}
 }
 @media (max-width:600px){
+  header.nav.scrolled .brand img{width:56px;height:56px}
+  header.nav.scrolled .lk-main{font-size:21px}
+  header.nav.scrolled .lk-the{font-size:8.5px}
+  header.nav.scrolled .lk-path b{font-size:10px}
+  header.nav.scrolled .lk-path i{width:16px}
+  header.nav.scrolled .lk-sub{font-size:7px}
   .brand img{width:38px;height:38px}
   .lk-main{font-size:15px}
   .lk-the{font-size:7px}
@@ -166,6 +188,7 @@ body{
 }
 body::before{
   content:"";position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.5;
+  transform:translateZ(0);will-change:transform;
   background:
     radial-gradient(120% 80% at 50% -10%, rgba(192,142,86,.14), transparent 60%),
     radial-gradient(90% 60% at 100% 100%, rgba(102,97,68,.08), transparent 65%);
@@ -311,12 +334,14 @@ header.nav:not(.scrolled) .lk-sub{font-size:9px}
 
 /* ─────────── the spine (signature) ─────────── */
 #spine{position:absolute;top:0;left:max(0px,calc(50% - min(50vw,620px) - 78px));width:var(--spine);z-index:60;pointer-events:none;overflow:visible}
+@media (max-width:1080px){ #spine{position:fixed;left:0;width:26px;height:100vh} }
+@media (max-width:600px){ #spine{left:0;width:20px;opacity:.85} }
 #spine .base{fill:none;stroke:rgba(147,121,96,.34);stroke-width:1.2;stroke-dasharray:5 7;stroke-linecap:round}
-#spine .lit{fill:none;stroke:var(--copper);stroke-width:1.6;stroke-linecap:round;filter:drop-shadow(0 0 6px rgba(192,142,86,.55))}
+#spine .lit{fill:none;stroke:var(--copper);stroke-width:1.6;stroke-linecap:round}
 #spine .wp{fill:none;stroke:rgba(147,121,96,.55);stroke-width:1.2}
 #spine .wp.lit{fill:var(--copper);stroke:var(--copper-lt)}
 #spine .halo{fill:rgba(192,142,86,.12)}
-#lantern{opacity:0}
+#lantern{opacity:0;will-change:transform;transform-box:fill-box;transform-origin:center}
 #lantern .core{fill:#FFF3E0}
 #lantern .glow1{fill:rgba(255,214,150,.42)}
 #lantern .glow2{fill:rgba(192,142,86,.16)}
@@ -574,7 +599,6 @@ footer nav a:hover{color:var(--sand)}
 
 /* ─────────── mobile ─────────── */
 @media (max-width:1080px){
-  #spine{display:none}
   .hero-grid,.split,.split.rev{grid-template-columns:1fr}
   .hero-mark{order:-1;max-width:380px;margin:0 auto}
   .offers,.paths,.two-doors{grid-template-columns:1fr}
@@ -979,8 +1003,24 @@ body[data-page="contact"] footer > .torn.top{display:none}
 
 
 /* ═══ nav: burger menu on tablet and below ═══ */
+@media (max-width:1080px){
+  /* a blurred fixed bar repaints continuously while scrolling */
+  header.nav{backdrop-filter:none;-webkit-backdrop-filter:none;background:rgba(250,243,236,.96)}
+  header.nav.onDark:not(.scrolled){background:linear-gradient(180deg,rgba(9,17,12,.55),rgba(9,17,12,0))}
+  header.nav::after{display:none}
+}
 @media (max-width:1000px){
-  .burger{display:flex}
+  .burger{display:flex;position:absolute;right:var(--gut);top:50%;transform:translateY(-50%);margin:0}
+  .nav-in{position:relative}
+  .brand{transition:transform .5s cubic-bezier(.2,.8,.2,1)}
+  /* scrolled: the lockup grows and slides to centre */
+  header.nav.scrolled .nav-in{padding-top:13px;padding-bottom:13px}
+  header.nav.scrolled .brand img{width:64px;height:64px}
+  header.nav.scrolled .lk-the{font-size:9.5px}
+  header.nav.scrolled .lk-main{font-size:24px}
+  header.nav.scrolled .lk-path b{font-size:11px}
+  header.nav.scrolled .lk-path i{width:19px}
+  header.nav.scrolled .lk-sub{font-size:7.5px}
   .nav-links{
     position:fixed;inset:0 0 auto;top:0;padding:110px var(--gut) 48px;background:var(--paper);
     flex:none;margin-left:0;flex-direction:column;align-items:flex-start;gap:4px;
@@ -1007,6 +1047,12 @@ body[data-page="contact"] footer > .torn.top{display:none}
   .lk-sub{font-size:6.5px}
 }
 @media (max-width:600px){
+  header.nav.scrolled .brand img{width:56px;height:56px}
+  header.nav.scrolled .lk-main{font-size:21px}
+  header.nav.scrolled .lk-the{font-size:8.5px}
+  header.nav.scrolled .lk-path b{font-size:10px}
+  header.nav.scrolled .lk-path i{width:16px}
+  header.nav.scrolled .lk-sub{font-size:7px}
   .brand img{width:38px;height:38px}
   .lk-main{font-size:15px}
   .lk-the{font-size:7px}
@@ -1829,36 +1875,53 @@ body[data-page="contact"] footer > .torn.top{display:none}
   /* ── the spine: a lit path down the page ──────────────── */
   var spine = {
     svg: document.getElementById('spine'), base:null, lit:null, lantern:null,
-    len:0, wps:[], H:0, off:0, active:false
+    len:0, wps:[], wpEls:[], pts:null, N:0, H:0, off:0,
+    cur:0, target:0, raf:null, lastWp:-1, narrow:false, active:false
   };
 
   function buildSpine(page){
     var s = spine.svg;
-    spine.active = window.innerWidth > 1080;
-    if (!spine.active){ s.innerHTML=''; return; }
+    var narrow = window.innerWidth <= 1080;
+    spine.narrow = narrow;
+    spine.active = true;
 
     s.innerHTML = ''; s.style.height = '0px'; s.style.top = '0px';
-    var heroDark = page.querySelector('.hero-dark');
-    var off = heroDark ? Math.round(heroDark.getBoundingClientRect().height) - 40 : 0;
+
+    var off = 0, H;
+    if (narrow){
+      // one viewport tall and fixed: the repaint area stays small, so the
+      // dash animation costs the same no matter how long the page is
+      H = Math.round(window.innerHeight);
+    } else {
+      var heroDark = page.querySelector('.hero-dark');
+      off = heroDark ? Math.round(heroDark.getBoundingClientRect().height) - 40 : 0;
+      var foot = document.querySelector('footer');
+      H = page.offsetHeight + (foot ? foot.offsetHeight : 0) - off;
+    }
     spine.off = off;
-    var foot = document.querySelector('footer');
-    var H = page.offsetHeight + (foot ? foot.offsetHeight : 0) - off;
     if (H < 200){ spine.active = false; return; }
     spine.H = H;
     s.style.top = off + 'px';
-    var W = 96, d = 'M 48 0';
-    for (var y=0; y<=H; y+=26){
-      var x = 48 + Math.sin(y/230)*17 + Math.sin(y/91)*4.5;
-      d += ' L ' + x.toFixed(1) + ' ' + y;
-    }
+
+    var W  = narrow ? 22 : 96,
+        cx = W / 2,
+        a1 = narrow ? 5 : 17,
+        a2 = narrow ? 1.4 : 4.5,
+        step = narrow ? 34 : 26;
+    var wave = function(y){ return cx + Math.sin(y/230)*a1 + Math.sin(y/91)*a2; };
+
+    var d = 'M ' + cx + ' 0';
+    for (var y = 0; y <= H; y += step) d += ' L ' + wave(y).toFixed(1) + ' ' + y;
+
     s.setAttribute('viewBox','0 0 '+W+' '+H);
     s.setAttribute('width',W); s.setAttribute('height',H);
     s.style.height = H+'px';
 
+    var lr = narrow ? [13,5.5,1.9] : [26,11,3.4];
     s.innerHTML =
       '<path class="base" d="'+d+'"/>'+
       '<path class="lit" d="'+d+'"/>'+
-      '<g id="lantern"><circle class="glow2" r="26"/><circle class="glow1" r="11"/><circle class="core" r="3.4"/></g>';
+      '<g id="lantern"><circle class="glow2" r="'+lr[0]+'"/><circle class="glow1" r="'+lr[1]+'"/><circle class="core" r="'+lr[2]+'"/></g>';
 
     spine.base = s.querySelector('.base');
     spine.lit  = s.querySelector('.lit');
@@ -1867,36 +1930,80 @@ body[data-page="contact"] footer > .torn.top{display:none}
     spine.lit.style.strokeDasharray = spine.len;
     spine.lit.style.strokeDashoffset = spine.len;
 
-    /* waypoints at each section */
-    spine.wps = [];
-    var frag = '';
-    page.querySelectorAll('section').forEach(function(sec, i){
-      if (i === 0) return;
-      var top = sec.getBoundingClientRect().top + window.scrollY - spine.off;
-      if (top > H || top < 0) return;
-      var x = 48 + Math.sin(top/230)*17 + Math.sin(top/91)*4.5;
-      frag += '<circle class="halo" cx="'+x.toFixed(1)+'" cy="'+top+'" r="9"/>'+
-              '<circle class="wp" cx="'+x.toFixed(1)+'" cy="'+top+'" r="3.6"/>';
-      spine.wps.push(top);
-    });
-    spine.svg.insertAdjacentHTML('beforeend', frag);
-    spine.wpEls = Array.prototype.slice.call(s.querySelectorAll('.wp'));
-    paintSpine();
+    /* sample the path once so no frame ever calls getPointAtLength */
+    var N = Math.max(120, Math.min(600, Math.round(spine.len / 12)));
+    spine.N = N; spine.pts = new Float32Array((N + 1) * 2);
+    for (var i = 0; i <= N; i++){
+      var pt = spine.lit.getPointAtLength(spine.len * i / N);
+      spine.pts[i*2] = pt.x; spine.pts[i*2+1] = pt.y;
+    }
+
+    /* waypoints at each section — desktop only, they crowd a narrow gutter */
+    spine.wps = []; spine.wpEls = [];
+    if (!narrow){
+      var frag = '';
+      page.querySelectorAll('section').forEach(function(sec, i){
+        if (i === 0) return;
+        var top = sec.getBoundingClientRect().top + window.scrollY - spine.off;
+        if (top > H || top < 0) return;
+        frag += '<circle class="halo" cx="'+wave(top).toFixed(1)+'" cy="'+top+'" r="9"/>'+
+                '<circle class="wp" cx="'+wave(top).toFixed(1)+'" cy="'+top+'" r="3.6"/>';
+        spine.wps.push(top);
+      });
+      s.insertAdjacentHTML('beforeend', frag);
+      spine.wpEls = Array.prototype.slice.call(s.querySelectorAll('.wp'));
+    }
+
+    spine.cur = spineTarget();
+    spine.lastWp = -1;
+    drawSpine();
+  }
+
+  function spineTarget(){
+    if (spine.narrow){
+      var max = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+      return Math.max(0, Math.min(1, window.scrollY / max));
+    }
+    var y = window.scrollY + window.innerHeight * 0.5 - spine.off;
+    return Math.max(0, Math.min(1, y / spine.H));
+  }
+
+  function drawSpine(){
+    var p = spine.cur;
+    spine.lit.style.strokeDashoffset = (spine.len * (1 - p)).toFixed(1);
+
+    var f = p * spine.N, i = f | 0, r = f - i,
+        j = i < spine.N ? i + 1 : i,
+        x = spine.pts[i*2]   + (spine.pts[j*2]   - spine.pts[i*2])   * r,
+        y = spine.pts[i*2+1] + (spine.pts[j*2+1] - spine.pts[i*2+1]) * r;
+    spine.lantern.style.transform = 'translate(' + x.toFixed(2) + 'px,' + y.toFixed(2) + 'px)';
+    spine.lantern.style.opacity = p > 0.004 ? 1 : 0;
+
+    if (spine.wpEls.length){
+      var reached = -1, yy = p * spine.H;
+      for (var k = 0; k < spine.wps.length; k++) if (spine.wps[k] <= yy) reached = k;
+      if (reached !== spine.lastWp){
+        for (var m = 0; m < spine.wpEls.length; m++)
+          spine.wpEls[m].classList.toggle('lit', m <= reached);
+        spine.lastWp = reached;
+      }
+    }
+  }
+
+  /* damped follow — the scroll sets a target, the frame loop eases toward it */
+  function spineFrame(){
+    var diff = spine.target - spine.cur;
+    if (Math.abs(diff) < 0.00012){ spine.cur = spine.target; drawSpine(); spine.raf = null; return; }
+    spine.cur += diff * (REDUCED ? 1 : 0.16);
+    drawSpine();
+    spine.raf = requestAnimationFrame(spineFrame);
   }
 
   function paintSpine(){
     if (!spine.active || !spine.lit) return;
-    var y = window.scrollY + window.innerHeight * 0.5 - spine.off;
-    if (y < 0){ spine.lit.style.strokeDashoffset = spine.len; spine.lantern.style.opacity = 0; return; }
-    var p = Math.max(0, Math.min(1, y / spine.H));
-    spine.lit.style.strokeDashoffset = spine.len * (1 - p);
-    var pt = spine.lit.getPointAtLength(spine.len * p);
-    spine.lantern.setAttribute('transform','translate('+pt.x.toFixed(1)+','+pt.y.toFixed(1)+')');
-    spine.lantern.style.opacity = p > 0.004 ? 1 : 0;
-    for (var i=0;i<spine.wps.length;i++){
-      if (spine.wps[i] <= y) spine.wpEls[i].classList.add('lit');
-      else spine.wpEls[i].classList.remove('lit');
-    }
+    spine.target = spineTarget();
+    if (REDUCED){ spine.cur = spine.target; drawSpine(); return; }
+    if (!spine.raf) spine.raf = requestAnimationFrame(spineFrame);
   }
 
   /* ── reveal choreography per page ─────────────────────── */
@@ -1909,6 +2016,8 @@ body[data-page="contact"] footer > .torn.top{display:none}
     ctx = gsap.context(function(){
 
       var isHero = function(el){ return !!el.closest('.hero'); };
+      // scrubbed parallax is the most expensive thing on the page — desktop only
+      var PARALLAX = window.innerWidth > 1080 && !REDUCED;
 
       /* eyebrows */
       gsap.utils.toArray(page.querySelectorAll('[data-fx="eyebrow"]')).forEach(function(el){
@@ -1956,12 +2065,12 @@ body[data-page="contact"] footer > .torn.top{display:none}
       /* hero photograph — slow layer */
       gsap.utils.toArray(page.querySelectorAll('[data-fx="shot"]')).forEach(function(el){
         gsap.from(el, {opacity:0, scale:1.07, duration:2.2, ease:'power3.out'});
-        if (!REDUCED) gsap.to(el, {yPercent:-9, force3D:true, ease:'none',
+        if (PARALLAX) gsap.to(el, {yPercent:-9, force3D:true, ease:'none',
           scrollTrigger:{trigger:'.hero-dark', start:'top top', end:'bottom top', scrub:true}});
       });
 
       /* hero copy — fast layer, drifts up and dims */
-      if (!REDUCED){
+      if (PARALLAX){
         var hc = page.querySelector('.hero-copy'), hq = page.querySelector('.hero-quote');
         if (hc) gsap.to(hc, {yPercent:-14, force3D:true, ease:'none',
           scrollTrigger:{trigger:'.hero-dark', start:'top top', end:'bottom top', scrub:true}});
@@ -2021,7 +2130,7 @@ body[data-page="contact"] footer > .torn.top{display:none}
       gsap.utils.toArray(page.querySelectorAll('[data-fx="art"]')).forEach(function(el){
         gsap.from(el, {clipPath:'inset(0% 0% 100% 0%)', duration:1.5, ease:'power3.inOut',
           scrollTrigger:{trigger:el, start:'top 88%'}});
-        if (!REDUCED) gsap.to(el.querySelector('svg'), {yPercent:-8, ease:'none',
+        if (PARALLAX) gsap.to(el.querySelector('svg'), {yPercent:-8, ease:'none',
           scrollTrigger:{trigger:el, start:'top bottom', end:'bottom top', scrub:.7}});
       });
 
@@ -2035,7 +2144,7 @@ body[data-page="contact"] footer > .torn.top{display:none}
       if (snaps.length){
         gsap.from(snaps, {opacity:0, y:56, rotate:-6, duration:1.05, ease:'power3.out', stagger:.13,
           scrollTrigger:{trigger:snaps[0], start:'top 88%'}});
-        if (!REDUCED) gsap.utils.toArray(snaps).forEach(function(el,i){
+        if (PARALLAX) gsap.utils.toArray(snaps).forEach(function(el,i){
           gsap.to(el, {yPercent:[-9,4,-14][i] || 0, ease:'none', force3D:true,
             scrollTrigger:{trigger:el.parentNode, start:'top bottom', end:'bottom top', scrub:true}});
         });
@@ -2152,13 +2261,22 @@ body[data-page="contact"] footer > .torn.top{display:none}
         }
         var ws = ll.querySelectorAll('.w');
         gsap.set(ws, {opacity:.16, color:'#8E7F6B'});
-        gsap.to(ws, {
-          opacity:1, color:'#F6EADA', stagger:.5, ease:'none',
-          scrollTrigger:{trigger:ll, start:'top 78%', end:'bottom 42%', scrub:.7}
-        });
+        if (PARALLAX){
+          gsap.to(ws, {
+            opacity:1, color:'#F6EADA', stagger:.5, ease:'none',
+            scrollTrigger:{trigger:ll, start:'top 78%', end:'bottom 42%', scrub:.7}
+          });
+        } else {
+          gsap.to(ws, {opacity:1, color:'#F6EADA', duration:.5, ease:'none', stagger:.09,
+            scrollTrigger:{trigger:ll, start:'top 82%'}});
+        }
         var bc = page.querySelector('#beacon');
-        if (bc) gsap.fromTo(bc, {opacity:.15, scale:.7}, {opacity:1, scale:1.05, ease:'none',
-          scrollTrigger:{trigger:ll, start:'top 85%', end:'bottom 40%', scrub:.7}});
+        if (bc){
+          if (PARALLAX) gsap.fromTo(bc, {opacity:.15, scale:.7}, {opacity:1, scale:1.05, ease:'none',
+            scrollTrigger:{trigger:ll, start:'top 85%', end:'bottom 40%', scrub:.7}});
+          else gsap.fromTo(bc, {opacity:.15, scale:.85}, {opacity:1, scale:1, duration:1.1, ease:'power2.out',
+            scrollTrigger:{trigger:ll, start:'top 85%'}});
+        }
       }
 
       /* dark band lift */
@@ -2333,6 +2451,32 @@ body[data-page="contact"] footer > .torn.top{display:none}
     nav.classList.remove('no-anim');
   }
 
+  /* mobile: the lockup slides to the centre of the bar once the nav compacts */
+  var brandShift = 0;
+  function measureBrandShift(){
+    var brand = document.querySelector('.brand'), navIn = document.querySelector('.nav-in');
+    if (!brand || !navIn) return;
+    if (window.innerWidth > 1000){ brandShift = 0; brand.style.transform = ''; return; }
+
+    var wasScrolled = nav.classList.contains('scrolled'), prevTf = brand.style.transform;
+    nav.classList.add('no-anim');
+    nav.classList.add('scrolled');
+    brand.style.transform = 'translateX(0px)';
+
+    var b = brand.getBoundingClientRect(), c = navIn.getBoundingClientRect();
+    brandShift = Math.round((c.left + c.width / 2) - (b.left + b.width / 2));
+
+    if (!wasScrolled) nav.classList.remove('scrolled');
+    brand.style.transform = prevTf;
+    void nav.offsetWidth;
+    nav.classList.remove('no-anim');
+  }
+  function placeBrand(){
+    var brand = document.querySelector('.brand'); if (!brand) return;
+    if (window.innerWidth > 1000){ brand.style.transform = ''; return; }
+    brand.style.transform = 'translateX(' + (nav.classList.contains('scrolled') ? brandShift : 0) + 'px)';
+  }
+
   function centerNav(){
     var mid = document.getElementById('navmid'); if (!mid) return;
     if (window.innerWidth <= 1000){ mid.style.transform = ''; return; }
@@ -2352,7 +2496,7 @@ body[data-page="contact"] footer > .torn.top{display:none}
       var wasScrolled = nav.classList.contains('scrolled');
       var isScrolled = window.scrollY > 60;
       nav.classList.toggle('scrolled', isScrolled);
-      if (isScrolled !== wasScrolled){ measureNavShift(); centerNav(); }
+      if (isScrolled !== wasScrolled){ measureNavShift(); centerNav(); measureBrandShift(); placeBrand(); }
       paintSpine();
       ticking = false;
     });
@@ -2366,6 +2510,8 @@ body[data-page="contact"] footer > .torn.top{display:none}
       alignQuote();
       measureNavShift();
       centerNav();
+      measureBrandShift();
+      placeBrand();
       if (page) buildSpine(page);
       if (HAS) ScrollTrigger.refresh();
     }, 220);
@@ -2381,7 +2527,9 @@ body[data-page="contact"] footer > .torn.top{display:none}
   }, 350); }
 
   if (document.fonts && document.fonts.ready){
-    document.fonts.ready.then(function(){ measureNavShift(); centerNav(); });
+    document.fonts.ready.then(function(){
+      measureNavShift(); centerNav(); measureBrandShift(); placeBrand();
+    });
   }
 
   if (document.readyState === 'complete') boot();
