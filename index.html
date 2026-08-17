@@ -741,6 +741,8 @@ footer nav a:hover{color:var(--sand)}
 .hero-ridge{display:none}
 .hero-dark::after{content:"";position:absolute;inset:0;z-index:2;pointer-events:none;background:radial-gradient(125% 88% at 46% 44%, transparent 46%, rgba(5,12,9,.5) 100%)}
 .hero-dark-in{
+  max-width:2040px;margin:0 auto;
+  padding-left:clamp(20px,4vw,110px);padding-right:clamp(20px,3vw,80px);
   position:relative;z-index:3;display:grid;grid-template-columns:minmax(0,1.18fr) minmax(0,.86fr) minmax(0,.5fr);
   gap:clamp(14px,2.6vw,40px);align-items:center;
   min-height:100vh;min-height:100svh;padding-top:clamp(126px,13vh,168px);padding-bottom:clamp(30px,4vh,60px);
@@ -786,7 +788,7 @@ footer nav a:hover{color:var(--sand)}
   content:"";flex:0 0 auto;width:1.6em;height:1px;background:var(--sand);opacity:.75;
 }
 .hero-quote::before{
-  content:"\201C";position:absolute;left:-.07em;top:-.07em;z-index:0;
+  content:"\201C";position:absolute;left:.05em;top:.16em;z-index:0;
   font-family:'Anton',Impact,'Haettenschweiler','Arial Narrow Bold',var(--util);
   font-weight:400;font-size:clamp(120px,11vw,184px);
   line-height:.72;letter-spacing:-.02em;color:var(--sand);opacity:.26;pointer-events:none;
@@ -1375,6 +1377,38 @@ input.err,textarea.err,select.err{border-color:#B4553F}
   .form-actions{gap:12px}
 }
 
+
+/* ═══ intake dialog ═══ */
+.link-btn{background:none;border:0;padding:0;font:inherit;color:var(--copper);cursor:pointer;
+  border-bottom:1px solid rgba(163,111,59,.45)}
+.link-btn:hover{color:var(--copper-lt)}
+.modal{position:fixed;inset:0;z-index:120;display:none}
+.modal.open{display:block}
+.modal-veil{position:absolute;inset:0;background:rgba(12,22,16,.55);backdrop-filter:blur(3px);
+  opacity:0;transition:opacity .35s}
+.modal.in .modal-veil{opacity:1}
+.modal-card{
+  position:relative;margin:clamp(16px,5vh,64px) auto;max-width:min(980px,92vw);
+  max-height:88vh;overflow-y:auto;-webkit-overflow-scrolling:touch;
+  background:var(--paper);border:1px solid var(--line-soft);
+  padding:clamp(28px,4vw,58px) clamp(22px,4vw,58px) clamp(30px,4vw,56px);
+  box-shadow:0 40px 90px -30px rgba(12,22,16,.55);
+  opacity:0;transform:translateY(14px) scale(.985);
+  transition:opacity .35s,transform .45s cubic-bezier(.2,.8,.2,1);
+}
+.modal.in .modal-card{opacity:1;transform:none}
+.modal-x{
+  position:absolute;top:14px;right:16px;width:40px;height:40px;line-height:1;
+  font-size:26px;background:none;border:0;color:var(--taupe);cursor:pointer;
+  transition:color .3s,transform .3s
+}
+.modal-x:hover{color:var(--copper);transform:rotate(90deg)}
+.modal .h-lg{margin-bottom:0}
+body.modal-open{overflow:hidden}
+@media (max-width:760px){
+  .modal-card{margin:0;max-width:100%;min-height:100%;max-height:none;border:0}
+}
+
 @media (prefers-reduced-motion:reduce){
   *{animation-duration:.01ms !important;transition-duration:.01ms !important}
 }
@@ -1434,7 +1468,7 @@ input.err,textarea.err,select.err{border-color:#B4553F}
       <path d="M0 348 L150 246 L292 330 L448 208 L600 332 L784 244 L952 356 L1124 262 L1296 344 L1440 286 L1440 520 L0 520 Z" fill="rgba(26,48,36,.78)"/>
       <path d="M0 424 L190 344 L368 418 L544 328 L744 428 L928 352 L1130 436 L1316 366 L1440 418 L1440 520 L0 520 Z" fill="rgba(11,24,17,.94)"/>
     </svg>
-    <div class="wrap-wide hero-dark-in">
+    <div class="hero-dark-in">
       <div class="hero-copy">
         <h1 class="h-hero" data-fx="lines">
           <span class="line-mask"><span>Live With Purpose.</span></span>
@@ -1453,7 +1487,7 @@ input.err,textarea.err,select.err{border-color:#B4553F}
         <p class="values"><span>Clarity</span><i></i><span>Direction</span><i></i><span>Growth</span><i></i><span>Purpose</span><i></i><span>Presence</span></p>
         <p class="lede" data-fx="up">Coaching and consulting for clarity, confidence, and a life aligned with purpose.</p>
         <div class="hero-cta" data-fx="up">
-          <a class="btn btn-solid btn-lg" href="#/contact" data-go="contact">Start Your Journey</a>
+          <button class="btn btn-solid btn-lg" type="button" data-intake>Start Your Journey</button>
           <a class="btn btn-ghost btn-lg" href="#/consulting" data-go="consulting">Explore Consulting</a>
         </div>
       </div>
@@ -1750,7 +1784,7 @@ input.err,textarea.err,select.err{border-color:#B4553F}
         <li data-fx="mani"><span>10</span>Integrity matters.</li>
         <li data-fx="mani" style="grid-column:1/-1"><span>11</span>The world does not need more noise. It needs more clear notes.</li>
       </ul>
-      <p style="margin-top:3rem" data-fx="up"><a class="btn btn-ghost btn-lg" href="#/contact" data-go="contact">Start your journey</a></p>
+      <p style="margin-top:3rem" data-fx="up"><button class="btn btn-ghost btn-lg" type="button" data-intake>Start your journey</button></p>
     </div>
   </section>
 </div>
@@ -1763,7 +1797,7 @@ input.err,textarea.err,select.err{border-color:#B4553F}
       <h1 class="h-xl" data-fx="lines"><span class="line-mask"><span>Find your path</span></span></h1>
       <p class="lede" style="margin-top:2rem" data-fx="up">Personal coaching for seasons of change, uncertainty, and becoming.</p>
       <div class="hero-cta" data-fx="up">
-        <a class="btn btn-solid btn-lg" href="#/contact" data-go="contact">Book the first conversation</a>
+        <button class="btn btn-solid btn-lg" type="button" data-intake>Book the first conversation</button>
       </div>
     </div>
   </section>
@@ -1853,7 +1887,7 @@ input.err,textarea.err,select.err{border-color:#B4553F}
             <li>Between-session communication</li>
             <li>Completion conversation &amp; forward plan</li>
           </ul>
-          <p><a class="btn btn-ghost" href="#/contact" data-go="contact">Start your journey</a></p>
+          <p><button class="btn btn-ghost" type="button" data-intake>Start your journey</button></p>
         </div>
       </div>
     </div>
@@ -1892,7 +1926,7 @@ input.err,textarea.err,select.err{border-color:#B4553F}
       <h1 class="h-xl" data-fx="lines"><span class="line-mask"><span>Develop your craft</span></span></h1>
       <p class="lede" style="margin-top:2rem" data-fx="up">Adult learning and instructor development. Instructor development · Facilitation · Communication · Learning design.</p>
       <div class="hero-cta" data-fx="up">
-        <a class="btn btn-solid btn-lg" href="#/contact" data-go="contact">Start a consulting conversation</a>
+        <button class="btn btn-solid btn-lg" type="button" data-intake>Start a consulting conversation</button>
       </div>
     </div>
   </section>
@@ -2004,7 +2038,7 @@ input.err,textarea.err,select.err{border-color:#B4553F}
     <div class="wrap" style="text-align:center">
       <p class="eyebrow center" data-fx="eyebrow">In the Meantime</p>
       <h2 class="h-lg" data-fx="lines" style="max-width:18ch;margin:0 auto"><span class="line-mask"><span>Reading is useful.</span></span><span class="line-mask"><span>Walking is better.</span></span></h2>
-      <p style="margin-top:2.6rem" data-fx="up"><a class="btn btn-ghost btn-lg" href="#/contact" data-go="contact">Start your journey</a></p>
+      <p style="margin-top:2.6rem" data-fx="up"><button class="btn btn-ghost btn-lg" type="button" data-intake>Start your journey</button></p>
     </div>
   </section>
 </div>
@@ -2040,7 +2074,7 @@ input.err,textarea.err,select.err{border-color:#B4553F}
           <h3>I'm interested in consulting</h3>
           <p>Tell Tobias about your organization, your instructors, the learning challenge in front of you, or the development goal you're aiming at.</p>
           <p class="price">Scoped to the work</p>
-          <a class="btn" href="#form" data-scroll="form">Start a consulting conversation</a>
+          <button class="btn" type="button" data-intake>Start a consulting conversation</button>
         </div>
       </div>
     </div>
@@ -2048,125 +2082,24 @@ input.err,textarea.err,select.err{border-color:#B4553F}
 
   <section class="band" id="form">
     <div class="wrap">
-      <p class="eyebrow" data-fx="eyebrow">Intake</p>
+      <p class="eyebrow" data-fx="eyebrow">Send a Note</p>
       <h2 class="h-lg" data-fx="lines"><span class="line-mask"><span>Tell him where you are</span></span></h2>
-      <p class="lede" data-fx="up" style="margin-top:1.2rem;max-width:56ch">A few questions so the first conversation starts somewhere real. Nothing here is a test, and you can leave anything blank.</p>
-
-      <form id="intake" data-fx="up" novalidate>
-
-        <!-- which door -->
-        <fieldset class="fs full">
-          <legend>Which are you here for?</legend>
-          <div class="choice">
-            <label class="opt"><input type="radio" name="track" value="coaching" checked><span>Personal coaching</span></label>
-            <label class="opt"><input type="radio" name="track" value="consulting"><span>Consulting for my organization</span></label>
-          </div>
-        </fieldset>
-
-        <div class="f"><label for="i-name">Name</label><input id="i-name" name="name" type="text" autocomplete="name" placeholder="Your name" required></div>
-        <div class="f"><label for="i-mail">Email</label><input id="i-mail" name="email" type="email" autocomplete="email" placeholder="you@example.com" required></div>
-        <div class="f"><label for="i-phone">Phone <em>optional</em></label><input id="i-phone" name="phone" type="tel" autocomplete="tel" placeholder="(555) 555-5555"></div>
-        <div class="f"><label for="i-where">Where you are based</label><input id="i-where" name="location" type="text" placeholder="City, or time zone"></div>
-
-        <!-- ── coaching branch ── -->
-        <div class="branch" data-track="coaching">
-          <fieldset class="fs full">
-            <legend>Which of these sounds closest to where you are standing?</legend>
-            <div class="choice grid">
-              <label class="opt"><input type="checkbox" name="situation" value="Transition"><span>Transition</span></label>
-              <label class="opt"><input type="checkbox" name="situation" value="Uncertainty"><span>Uncertainty</span></label>
-              <label class="opt"><input type="checkbox" name="situation" value="Misalignment"><span>Misalignment</span></label>
-              <label class="opt"><input type="checkbox" name="situation" value="Major decisions"><span>Major decisions</span></label>
-              <label class="opt"><input type="checkbox" name="situation" value="Personal growth"><span>Personal growth</span></label>
-              <label class="opt"><input type="checkbox" name="situation" value="A changing season"><span>A changing season</span></label>
-              <label class="opt"><input type="checkbox" name="situation" value="What comes next"><span>&ldquo;What comes next?&rdquo;</span></label>
-            </div>
-          </fieldset>
-
-          <div class="f full"><label for="i-now">What made you reach out now?</label>
-            <textarea id="i-now" name="why_now" placeholder="A few sentences is plenty. There is no correct way to write this."></textarea></div>
-
-          <div class="f full"><label for="i-six">If six months from now something were different, what would it be?</label>
-            <textarea id="i-six" name="six_months" placeholder="Even a rough answer helps."></textarea></div>
-
-          <div class="f"><label for="i-offer">Where you would like to start</label>
-            <select id="i-offer" name="offer">
-              <option>The First Conversation — 90 minutes, $200</option>
-              <option>The Well-Lit Path Journey — eight sessions, $1,200</option>
-              <option>Not sure yet — help me decide</option>
-            </select>
-          </div>
-
-          <div class="f"><label for="i-worked">Have you worked with a coach before?</label>
-            <select id="i-worked" name="prior">
-              <option>No, this would be a first</option>
-              <option>Yes, some time ago</option>
-              <option>Yes, currently or recently</option>
-            </select>
-          </div>
-        </div>
-
-        <!-- ── consulting branch ── -->
-        <div class="branch" data-track="consulting" hidden>
-          <div class="f"><label for="i-org">Organization</label><input id="i-org" name="org" type="text" placeholder="Where you work"></div>
-          <div class="f"><label for="i-role">Your role</label><input id="i-role" name="role" type="text" placeholder="What you do there"></div>
-
-          <fieldset class="fs full">
-            <legend>Who are you looking to develop?</legend>
-            <div class="choice grid">
-              <label class="opt"><input type="checkbox" name="audience" value="Instructors"><span>Instructors</span></label>
-              <label class="opt"><input type="checkbox" name="audience" value="Corporate trainers"><span>Corporate trainers</span></label>
-              <label class="opt"><input type="checkbox" name="audience" value="Facilitators"><span>Facilitators</span></label>
-              <label class="opt"><input type="checkbox" name="audience" value="Subject-matter experts"><span>Subject-matter experts</span></label>
-              <label class="opt"><input type="checkbox" name="audience" value="Speakers"><span>Speakers</span></label>
-              <label class="opt"><input type="checkbox" name="audience" value="Leadership team"><span>Leadership team</span></label>
-            </div>
-          </fieldset>
-
-          <div class="f full"><label for="i-challenge">What is the learning challenge in front of you?</label>
-            <textarea id="i-challenge" name="challenge" placeholder="What is happening now, and what you would like to be happening instead."></textarea></div>
-
-          <div class="f"><label for="i-size">How many people</label>
-            <select id="i-size" name="group_size">
-              <option>1–5</option><option>6–15</option><option>16–40</option><option>40+</option><option>Not sure yet</option>
-            </select>
-          </div>
-
-          <div class="f"><label for="i-format">Format you have in mind</label>
-            <select id="i-format" name="format">
-              <option>Not sure yet — let's talk it through</option>
-              <option>One-on-one instructor coaching</option>
-              <option>Workshop or intensive</option>
-              <option>Ongoing program</option>
-              <option>Learning design or curriculum review</option>
-            </select>
-          </div>
-        </div>
-
-        <!-- shared tail -->
-        <div class="f"><label for="i-when">Timing</label>
-          <select id="i-when" name="timing">
-            <option>As soon as there is space</option>
-            <option>Within the next month</option>
-            <option>Next quarter</option>
-            <option>Just exploring for now</option>
+      <form data-fx="up" onsubmit="return false">
+        <div class="f"><label for="c-name">Name</label><input id="c-name" type="text" placeholder="Your name"></div>
+        <div class="f"><label for="c-mail">Email</label><input id="c-mail" type="email" placeholder="you@example.com"></div>
+        <div class="f full"><label for="c-int">What brings you here</label>
+          <select id="c-int">
+            <option>Personal coaching — The First Conversation</option>
+            <option>Personal coaching — The Well-Lit Path Journey</option>
+            <option>Consulting — instructor development</option>
+            <option>Consulting — facilitation or learning design</option>
+            <option>Speaking or something else</option>
           </select>
         </div>
-        <div class="f"><label for="i-heard">How you found Tobias</label>
-          <select id="i-heard" name="heard">
-            <option>A referral</option><option>Search</option><option>Social media</option>
-            <option>Heard him speak</option><option>Worked together before</option><option>Other</option>
-          </select>
-        </div>
-
-        <div class="f full"><label for="i-any">Anything else he should know <em>optional</em></label>
-          <textarea id="i-any" name="anything" placeholder="Anything at all."></textarea></div>
-
-        <div class="f full form-actions">
-          <button class="btn btn-solid btn-lg" type="submit">Send my intake</button>
-          <span class="form-status" id="i-status" role="status"></span>
-        </div>
-        <p class="form-note">Tobias reads every one himself and replies within two business days. Nothing you write here is shared with anyone.</p>
+        <div class="f full"><label for="c-msg">Where you are right now</label><textarea id="c-msg" placeholder="A few sentences is plenty. There is no correct way to write this."></textarea></div>
+        <div class="f full"><button class="btn btn-solid btn-lg" type="button" style="align-self:flex-start">Send my note</button></div>
+        <p class="form-note">Tobias reads every note himself and replies within two business days.
+          Prefer to answer a few questions first? <button type="button" class="link-btn" data-intake>Open the intake form</button>.</p>
       </form>
     </div>
   </section>
@@ -2233,6 +2166,132 @@ input.err,textarea.err,select.err{border-color:#B4553F}
     </div>
   </div>
 </footer>
+
+<div class="modal" id="intakeModal" aria-hidden="true">
+  <div class="modal-veil" data-close></div>
+  <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="intakeTitle">
+    <button class="modal-x" type="button" data-close aria-label="Close">&times;</button>
+    <p class="eyebrow">Intake</p>
+    <h2 class="h-lg" id="intakeTitle">Tell him where you are</h2>
+    <p class="lede" style="margin-top:1rem;max-width:52ch">A few questions so the first conversation starts somewhere real. Nothing here is a test, and you can leave anything blank.</p>
+      <form id="intake" data-fx="up" novalidate>
+
+      <!-- which door -->
+      <fieldset class="fs full">
+      <legend>Which are you here for?</legend>
+      <div class="choice">
+      <label class="opt"><input type="radio" name="track" value="coaching" checked><span>Personal coaching</span></label>
+      <label class="opt"><input type="radio" name="track" value="consulting"><span>Consulting for my organization</span></label>
+      </div>
+      </fieldset>
+
+      <div class="f"><label for="i-name">Name</label><input id="i-name" name="name" type="text" autocomplete="name" placeholder="Your name" required></div>
+      <div class="f"><label for="i-mail">Email</label><input id="i-mail" name="email" type="email" autocomplete="email" placeholder="you@example.com" required></div>
+      <div class="f"><label for="i-phone">Phone <em>optional</em></label><input id="i-phone" name="phone" type="tel" autocomplete="tel" placeholder="(555) 555-5555"></div>
+      <div class="f"><label for="i-where">Where you are based</label><input id="i-where" name="location" type="text" placeholder="City, or time zone"></div>
+
+      <!-- ── coaching branch ── -->
+      <div class="branch" data-track="coaching">
+      <fieldset class="fs full">
+      <legend>Which of these sounds closest to where you are standing?</legend>
+      <div class="choice grid">
+      <label class="opt"><input type="checkbox" name="situation" value="Transition"><span>Transition</span></label>
+      <label class="opt"><input type="checkbox" name="situation" value="Uncertainty"><span>Uncertainty</span></label>
+      <label class="opt"><input type="checkbox" name="situation" value="Misalignment"><span>Misalignment</span></label>
+      <label class="opt"><input type="checkbox" name="situation" value="Major decisions"><span>Major decisions</span></label>
+      <label class="opt"><input type="checkbox" name="situation" value="Personal growth"><span>Personal growth</span></label>
+      <label class="opt"><input type="checkbox" name="situation" value="A changing season"><span>A changing season</span></label>
+      <label class="opt"><input type="checkbox" name="situation" value="What comes next"><span>&ldquo;What comes next?&rdquo;</span></label>
+      </div>
+      </fieldset>
+
+      <div class="f full"><label for="i-now">What made you reach out now?</label>
+      <textarea id="i-now" name="why_now" placeholder="A few sentences is plenty. There is no correct way to write this."></textarea></div>
+
+      <div class="f full"><label for="i-six">If six months from now something were different, what would it be?</label>
+      <textarea id="i-six" name="six_months" placeholder="Even a rough answer helps."></textarea></div>
+
+      <div class="f"><label for="i-offer">Where you would like to start</label>
+      <select id="i-offer" name="offer">
+      <option>The First Conversation — 90 minutes, $200</option>
+      <option>The Well-Lit Path Journey — eight sessions, $1,200</option>
+      <option>Not sure yet — help me decide</option>
+      </select>
+      </div>
+
+      <div class="f"><label for="i-worked">Have you worked with a coach before?</label>
+      <select id="i-worked" name="prior">
+      <option>No, this would be a first</option>
+      <option>Yes, some time ago</option>
+      <option>Yes, currently or recently</option>
+      </select>
+      </div>
+      </div>
+
+      <!-- ── consulting branch ── -->
+      <div class="branch" data-track="consulting" hidden>
+      <div class="f"><label for="i-org">Organization</label><input id="i-org" name="org" type="text" placeholder="Where you work"></div>
+      <div class="f"><label for="i-role">Your role</label><input id="i-role" name="role" type="text" placeholder="What you do there"></div>
+
+      <fieldset class="fs full">
+      <legend>Who are you looking to develop?</legend>
+      <div class="choice grid">
+      <label class="opt"><input type="checkbox" name="audience" value="Instructors"><span>Instructors</span></label>
+      <label class="opt"><input type="checkbox" name="audience" value="Corporate trainers"><span>Corporate trainers</span></label>
+      <label class="opt"><input type="checkbox" name="audience" value="Facilitators"><span>Facilitators</span></label>
+      <label class="opt"><input type="checkbox" name="audience" value="Subject-matter experts"><span>Subject-matter experts</span></label>
+      <label class="opt"><input type="checkbox" name="audience" value="Speakers"><span>Speakers</span></label>
+      <label class="opt"><input type="checkbox" name="audience" value="Leadership team"><span>Leadership team</span></label>
+      </div>
+      </fieldset>
+
+      <div class="f full"><label for="i-challenge">What is the learning challenge in front of you?</label>
+      <textarea id="i-challenge" name="challenge" placeholder="What is happening now, and what you would like to be happening instead."></textarea></div>
+
+      <div class="f"><label for="i-size">How many people</label>
+      <select id="i-size" name="group_size">
+      <option>1–5</option><option>6–15</option><option>16–40</option><option>40+</option><option>Not sure yet</option>
+      </select>
+      </div>
+
+      <div class="f"><label for="i-format">Format you have in mind</label>
+      <select id="i-format" name="format">
+      <option>Not sure yet — let's talk it through</option>
+      <option>One-on-one instructor coaching</option>
+      <option>Workshop or intensive</option>
+      <option>Ongoing program</option>
+      <option>Learning design or curriculum review</option>
+      </select>
+      </div>
+      </div>
+
+      <!-- shared tail -->
+      <div class="f"><label for="i-when">Timing</label>
+      <select id="i-when" name="timing">
+      <option>As soon as there is space</option>
+      <option>Within the next month</option>
+      <option>Next quarter</option>
+      <option>Just exploring for now</option>
+      </select>
+      </div>
+      <div class="f"><label for="i-heard">How you found Tobias</label>
+      <select id="i-heard" name="heard">
+      <option>A referral</option><option>Search</option><option>Social media</option>
+      <option>Heard him speak</option><option>Worked together before</option><option>Other</option>
+      </select>
+      </div>
+
+      <div class="f full"><label for="i-any">Anything else he should know <em>optional</em></label>
+      <textarea id="i-any" name="anything" placeholder="Anything at all."></textarea></div>
+
+      <div class="f full form-actions">
+      <button class="btn btn-solid btn-lg" type="submit">Send my intake</button>
+      <span class="form-status" id="i-status" role="status"></span>
+      </div>
+      <p class="form-note">Tobias reads every one himself and replies within two business days. Nothing you write here is shared with anyone.</p>
+      </form>
+  </div>
+</div>
 
 <script>/*!
  * GSAP 3.12.5
@@ -2873,6 +2932,48 @@ input.err,textarea.err,select.err{border-color:#B4553F}
     });
   })();
 
+
+  /* ── intake dialog ─────────────────────────────────────── */
+  (function(){
+    var modal = document.getElementById('intakeModal');
+    if (!modal) return;
+    var card = modal.querySelector('.modal-card'), lastFocus = null;
+
+    function open(){
+      lastFocus = document.activeElement;
+      modal.classList.add('open');
+      document.body.classList.add('modal-open');
+      modal.setAttribute('aria-hidden','false');
+      requestAnimationFrame(function(){ modal.classList.add('in'); });
+      var first = card.querySelector('input,select,textarea,button');
+      if (first) setTimeout(function(){ first.focus(); }, 340);
+    }
+    function close(){
+      modal.classList.remove('in');
+      modal.setAttribute('aria-hidden','true');
+      setTimeout(function(){
+        modal.classList.remove('open');
+        document.body.classList.remove('modal-open');
+        if (lastFocus) lastFocus.focus();
+      }, 320);
+    }
+
+    document.addEventListener('click', function(e){
+      if (e.target.closest('[data-intake]')){ e.preventDefault(); open(); return; }
+      if (e.target.closest('[data-close]')) close();
+    });
+    document.addEventListener('keydown', function(e){
+      if (e.key === 'Escape' && modal.classList.contains('open')) close();
+      if (e.key === 'Tab' && modal.classList.contains('open')){
+        var f = card.querySelectorAll('a[href],button:not([disabled]),input:not([disabled]),select:not([disabled]),textarea:not([disabled])');
+        if (!f.length) return;
+        var first = f[0], last = f[f.length-1];
+        if (e.shiftKey && document.activeElement === first){ e.preventDefault(); last.focus(); }
+        else if (!e.shiftKey && document.activeElement === last){ e.preventDefault(); first.focus(); }
+      }
+    });
+  })();
+
   /* ── router ───────────────────────────────────────────── */
   var PAGES = ['home','about','coaching','consulting','resources','contact'];
   var current = null, booted = false;
@@ -3081,3 +3182,5 @@ input.err,textarea.err,select.err{border-color:#B4553F}
   route();
 })();
 </script>
+
+
