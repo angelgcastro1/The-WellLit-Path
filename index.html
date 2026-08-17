@@ -564,12 +564,54 @@ header.nav:not(.scrolled) .lk-sub{font-size:9px}
 .q .a>div{padding:0 40px 26px 0;max-width:none;color:var(--body)}
 
 /* ─────────── resources ─────────── */
-.res{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line-soft);border:1px solid var(--line-soft);margin-top:clamp(30px,4vw,52px)}
-.res a{background:var(--paper);padding:clamp(26px,3vw,40px);min-height:180px;display:flex;flex-direction:column;transition:background .5s}
-.res a:hover{background:var(--paper-2)}
-.res a .n{font-family:var(--util);font-size:9.5px;letter-spacing:.28em;color:var(--copper);margin-bottom:auto}
-.res a h4{font-size:1.05rem;letter-spacing:.13em;text-transform:uppercase;margin:2rem 0 .5rem}
+.res{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(14px,1.6vw,22px);
+  margin-top:clamp(30px,4vw,52px)}
+.res a{
+  position:relative;overflow:hidden;isolation:isolate;
+  background:linear-gradient(180deg,var(--paper-2),var(--paper));
+  border:1px solid var(--line-soft);
+  padding:clamp(26px,3vw,40px);min-height:210px;display:flex;flex-direction:column;
+  box-shadow:0 2px 6px rgba(28,46,36,.04);
+  transition:transform .5s cubic-bezier(.2,.8,.2,1),box-shadow .5s,border-color .5s,background .5s;
+}
+/* copper wash sweeps up from the base on hover */
+.res a::before{
+  content:"";position:absolute;inset:0;z-index:-1;
+  background:linear-gradient(180deg,rgba(163,111,59,.05),rgba(163,111,59,.16));
+  opacity:0;transform:translateY(38%);
+  transition:opacity .55s,transform .55s cubic-bezier(.2,.8,.2,1);
+}
+/* a light edge that draws across the top */
+.res a::after{
+  content:"";position:absolute;left:0;right:0;top:0;height:2px;background:var(--copper);
+  transform:scaleX(0);transform-origin:left;transition:transform .55s cubic-bezier(.2,.8,.2,1);
+}
+.res a:hover,.res a:focus-visible{
+  transform:translateY(-6px);border-color:rgba(163,111,59,.45);
+  box-shadow:0 18px 38px -14px rgba(28,46,36,.26),0 6px 14px -8px rgba(28,46,36,.14);
+}
+.res a:hover::before,.res a:focus-visible::before{opacity:1;transform:translateY(0)}
+.res a:hover::after,.res a:focus-visible::after{transform:scaleX(1)}
+.res a .n{font-family:var(--util);font-size:9.5px;letter-spacing:.28em;color:var(--copper);
+  margin-bottom:auto;transition:letter-spacing .5s}
+.res a:hover .n{letter-spacing:.38em}
+.res a h4{font-size:1.05rem;letter-spacing:.13em;text-transform:uppercase;margin:2rem 0 .5rem;
+  transition:color .45s}
+.res a:hover h4{color:var(--copper)}
 .res a p{font-size:.92rem;margin:0;color:var(--taupe)}
+/* arrow slides in from the left edge as it opens */
+.res a .go{
+  display:flex;align-items:center;gap:.7em;margin-top:1.4rem;
+  font-family:var(--util);font-size:9.5px;letter-spacing:.24em;text-transform:uppercase;
+  color:var(--copper);opacity:0;transform:translateY(8px);
+  transition:opacity .45s,transform .45s cubic-bezier(.2,.8,.2,1);
+}
+.res a .go i{display:block;width:22px;height:1px;background:var(--copper);font-style:normal}
+.res a:hover .go,.res a:focus-visible .go{opacity:1;transform:translateY(0)}
+@media (max-width:760px){
+  .res a{min-height:0}
+  .res a .go{opacity:1;transform:none}
+}
 
 .empty{border:1px dashed rgba(147,121,96,.45);padding:clamp(30px,4vw,54px);text-align:center;margin-top:clamp(28px,3.5vw,44px);background:rgba(200,172,146,.07)}
 
@@ -1805,12 +1847,12 @@ body[data-page="contact"] footer > .torn.top{display:none}
     <div class="wrap">
       <p class="eyebrow" data-fx="eyebrow">Browse by Territory</p>
       <div class="res">
-        <a href="#/resources" data-fx="res"><span class="n">01</span><h4>Personal Growth</h4><p>Becoming, unlearning, and the long work of change.</p></a>
-        <a href="#/resources" data-fx="res"><span class="n">02</span><h4>Clarity &amp; Reflection</h4><p>Questions and exercises for seeing your own situation.</p></a>
-        <a href="#/resources" data-fx="res"><span class="n">03</span><h4>Leadership</h4><p>Presence, service, and leading without performing.</p></a>
-        <a href="#/resources" data-fx="res"><span class="n">04</span><h4>Teaching &amp; Facilitation</h4><p>Running a room where learning actually happens.</p></a>
-        <a href="#/resources" data-fx="res"><span class="n">05</span><h4>Adult Learning</h4><p>How grown people actually learn, and what that demands.</p></a>
-        <a href="#/resources" data-fx="res"><span class="n">06</span><h4>Communication</h4><p>Saying the true thing in a way it can be received.</p></a>
+        <a href="#/resources" data-fx="res"><span class="n">01</span><h4>Personal Growth</h4><p>Becoming, unlearning, and the long work of change.</p><span class="go">Explore <i></i></span></a>
+        <a href="#/resources" data-fx="res"><span class="n">02</span><h4>Clarity &amp; Reflection</h4><p>Questions and exercises for seeing your own situation.</p><span class="go">Explore <i></i></span></a>
+        <a href="#/resources" data-fx="res"><span class="n">03</span><h4>Leadership</h4><p>Presence, service, and leading without performing.</p><span class="go">Explore <i></i></span></a>
+        <a href="#/resources" data-fx="res"><span class="n">04</span><h4>Teaching &amp; Facilitation</h4><p>Running a room where learning actually happens.</p><span class="go">Explore <i></i></span></a>
+        <a href="#/resources" data-fx="res"><span class="n">05</span><h4>Adult Learning</h4><p>How grown people actually learn, and what that demands.</p><span class="go">Explore <i></i></span></a>
+        <a href="#/resources" data-fx="res"><span class="n">06</span><h4>Communication</h4><p>Saying the true thing in a way it can be received.</p><span class="go">Explore <i></i></span></a>
       </div>
     </div>
   </section>
