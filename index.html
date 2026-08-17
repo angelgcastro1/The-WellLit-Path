@@ -2478,7 +2478,7 @@ body[data-page="contact"] footer > .torn.top{display:none}
 
     // every image below reserves its space in CSS, so loading shifts nothing
     // and no mid-scroll re-measure is needed
-    setTimeout(function(){ ScrollTrigger.refresh(); }, 420);
+    setTimeout(function(){ if (window.scrollY < 4) ScrollTrigger.refresh(); }, 420);
   }
 
   /* ── cursor light inside cards ────────────────────────── */
@@ -2530,16 +2530,22 @@ body[data-page="contact"] footer > .torn.top{display:none}
 
   /* ── router ───────────────────────────────────────────── */
   var PAGES = ['home','about','coaching','consulting','resources','contact'];
-  var current = null;
+  var current = null, booted = false;
 
+  var firstRoute = true;
   function route(){
     var h = (location.hash || '#/').replace('#/','').replace('#','') || 'home';
     if (PAGES.indexOf(h) === -1) h = 'home';
-    show(h);
+    show(h, firstRoute);      // initial render is instant, no curtain, no scroll reset
+    firstRoute = false;
   }
 
   function show(name, instant){
-    if (name === current) { window.scrollTo({top:0, behavior:'smooth'}); return; }
+    if (name === current){
+      // only a deliberate click on the current page should scroll to top
+      if (booted) window.scrollTo({top:0, behavior:'smooth'});
+      return;
+    }
     var go = function(){
       PAGES.forEach(function(p){
         document.getElementById('p-'+p).classList.toggle('active', p === name);
@@ -2708,17 +2714,23 @@ body[data-page="contact"] footer > .torn.top{display:none}
   });
 
   /* ── boot ─────────────────────────────────────────────── */
-  function boot(){ route(); setTimeout(function(){
-    var page = document.getElementById('p-'+current);
-    alignQuote();
-    measureNavShift();
-    centerNav();
-    if (page) buildSpine(page);
-  }, 350); }
+  function boot(){
+    setTimeout(function(){
+      var page = document.getElementById('p-'+current);
+      alignQuote();
+      measureNavShift();
+      centerNav();
+      measureBrandShift();
+      placeBrand();
+      if (page) buildSpine(page);
+      booted = true;
+    }, 350);
+  }
 
   if (document.fonts && document.fonts.ready){
     document.fonts.ready.then(function(){
       measureNavShift(); centerNav(); measureBrandShift(); placeBrand();
+      if (HAS && window.scrollY < 4) ScrollTrigger.refresh();
     });
   }
 
