@@ -1311,6 +1311,70 @@ body[data-page="contact"] footer > .torn.top{display:none}
   footer .lk-sub{font-size:8.5px}
 }
 
+
+/* ═══ chips that open a popover ═══ */
+.chip-wrap{position:relative}
+button.chip{
+  font:inherit;font-family:var(--util);font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;
+  padding:13px 20px;border:1px solid var(--line-soft);background:var(--paper-2);color:var(--ink-2);
+  cursor:pointer;transition:transform .4s cubic-bezier(.2,.8,.2,1),background .4s,border-color .4s,color .4s;
+}
+button.chip:hover{border-color:rgba(163,111,59,.45);transform:translateY(-2px)}
+button.chip:focus-visible{outline:2px solid var(--copper);outline-offset:3px}
+button.chip.on{background:var(--olive);border-color:var(--olive);color:#F4EADD;transform:translateY(-2px)}
+.pop{
+  position:absolute;z-index:6;max-width:min(430px,86vw);
+  background:var(--ink);color:#E9DCCB;padding:22px 24px;
+  box-shadow:0 22px 46px -18px rgba(28,46,36,.45);
+  opacity:0;transform:translateY(-6px) scale(.97);pointer-events:none;
+  transition:opacity .3s,transform .35s cubic-bezier(.2,.8,.2,1);
+}
+.pop.show{opacity:1;transform:translateY(0) scale(1);pointer-events:auto}
+.pop b{display:block;font-family:var(--util);font-weight:400;font-size:9.5px;letter-spacing:.26em;
+  text-transform:uppercase;color:var(--sand);margin-bottom:.6rem}
+.pop p{margin:0;font-size:.97rem;line-height:1.7;color:#E9DCCB}
+.pop i{position:absolute;top:-7px;width:14px;height:14px;background:var(--ink);transform:rotate(45deg)}
+.chip-hint{margin:1.5rem 0 0;font-size:.92rem;color:var(--taupe)}
+@media (max-width:640px){
+  button.chip{font-size:9.5px;padding:12px 15px;letter-spacing:.14em}
+  .pop{padding:18px 20px}
+  .pop p{font-size:.94rem}
+}
+
+
+/* ═══ intake form ═══ */
+.fs{border:0;margin:0;padding:0;min-width:0}
+.fs legend{font-family:var(--util);font-size:9.5px;letter-spacing:.26em;text-transform:uppercase;
+  color:var(--taupe);padding:0;margin-bottom:.9rem}
+.branch{display:contents}
+.branch[hidden]{display:none}   /* UA [hidden] loses to display:contents without this */
+.choice{display:flex;flex-wrap:wrap;gap:10px}
+.choice.grid{gap:9px}
+.opt{position:relative;display:inline-flex;align-items:center;cursor:pointer}
+.opt input{position:absolute;opacity:0;width:0;height:0}
+.opt span{
+  font-family:var(--util);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;
+  padding:12px 18px;border:1px solid var(--line-soft);background:var(--paper-2);color:var(--ink-2);
+  transition:background .35s,border-color .35s,color .35s,transform .35s cubic-bezier(.2,.8,.2,1);
+}
+.opt:hover span{border-color:rgba(163,111,59,.45);transform:translateY(-2px)}
+.opt input:checked + span{background:var(--olive);border-color:var(--olive);color:#F4EADD}
+.opt input:focus-visible + span{outline:2px solid var(--copper);outline-offset:3px}
+label em{font-style:normal;text-transform:none;letter-spacing:.06em;color:#A79683;margin-left:.5em}
+.form-actions{display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+.form-status{font-family:var(--util);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--copper)}
+input.err,textarea.err,select.err{border-color:#B4553F}
+.sent{
+  border:1px solid rgba(163,111,59,.4);background:var(--paper-2);
+  padding:clamp(26px,3.4vw,44px);margin-top:clamp(28px,3.5vw,44px);
+}
+.sent h3{font-size:clamp(1.1rem,1.7vw,1.4rem);letter-spacing:.1em;text-transform:uppercase;margin:0 0 .8rem}
+.sent p{margin:0;max-width:52ch}
+@media (max-width:760px){
+  .opt span{font-size:9.5px;padding:11px 14px;letter-spacing:.12em}
+  .form-actions{gap:12px}
+}
+
 @media (prefers-reduced-motion:reduce){
   *{animation-duration:.01ms !important;transition-duration:.01ms !important}
 }
@@ -1718,10 +1782,18 @@ body[data-page="contact"] footer > .torn.top{display:none}
     <div class="wrap">
       <p class="eyebrow" data-fx="eyebrow">Who It Is For</p>
       <h2 class="h-lg" data-fx="lines"><span class="line-mask"><span>If you are standing here</span></span></h2>
-      <div class="chips" data-fx="up" style="margin-top:2.4rem">
-        <span class="chip">Transition</span><span class="chip">Uncertainty</span><span class="chip">Misalignment</span>
-        <span class="chip">Major decisions</span><span class="chip">Personal growth</span>
-        <span class="chip">A changing season of life</span><span class="chip">“What comes next?”</span>
+      <div class="chip-wrap" data-fx="up" style="margin-top:2.4rem">
+        <div class="chips" id="standChips">
+        <button type="button" class="chip" aria-expanded="false" aria-controls="stand-pop" data-pop="You’re moving from one chapter of life into another and need clarity about what comes next.">Transition</button>
+        <button type="button" class="chip" aria-expanded="false" aria-controls="stand-pop" data-pop="You know something needs to change, but the direction forward isn’t clear yet.">Uncertainty</button>
+        <button type="button" class="chip" aria-expanded="false" aria-controls="stand-pop" data-pop="Something feels off between where you are, who you are, and the life you want to be living.">Misalignment</button>
+        <button type="button" class="chip" aria-expanded="false" aria-controls="stand-pop" data-pop="You’re facing an important choice and want greater clarity, confidence, and perspective before moving forward.">Major decisions</button>
+        <button type="button" class="chip" aria-expanded="false" aria-controls="stand-pop" data-pop="You’re ready to understand yourself more deeply, break old patterns, and intentionally become who you’re meant to be.">Personal growth</button>
+        <button type="button" class="chip" aria-expanded="false" aria-controls="stand-pop" data-pop="Your priorities, relationships, career, or circumstances are shifting, and you’re learning how to navigate this new season with purpose.">A changing season of life</button>
+        <button type="button" class="chip" aria-expanded="false" aria-controls="stand-pop" data-pop="You’ve reached a crossroads. You may not know exactly where you’re going yet, but you know you’re ready for something different.">“What comes next?”</button>
+        </div>
+        <div class="pop" id="stand-pop" role="status"><i></i><b></b><p></p></div>
+        <p class="chip-hint">Tap any one to see whether it sounds like where you are.</p>
       </div>
     </div>
   </section>
@@ -1976,23 +2048,125 @@ body[data-page="contact"] footer > .torn.top{display:none}
 
   <section class="band" id="form">
     <div class="wrap">
-      <p class="eyebrow" data-fx="eyebrow">Send a Note</p>
+      <p class="eyebrow" data-fx="eyebrow">Intake</p>
       <h2 class="h-lg" data-fx="lines"><span class="line-mask"><span>Tell him where you are</span></span></h2>
-      <form data-fx="up" onsubmit="return false">
-        <div class="f"><label for="c-name">Name</label><input id="c-name" type="text" placeholder="Your name"></div>
-        <div class="f"><label for="c-mail">Email</label><input id="c-mail" type="email" placeholder="you@example.com"></div>
-        <div class="f full"><label for="c-int">What brings you here</label>
-          <select id="c-int">
-            <option>Personal coaching — The First Conversation</option>
-            <option>Personal coaching — The Well-Lit Path Journey</option>
-            <option>Consulting — instructor development</option>
-            <option>Consulting — facilitation or learning design</option>
-            <option>Speaking or something else</option>
+      <p class="lede" data-fx="up" style="margin-top:1.2rem;max-width:56ch">A few questions so the first conversation starts somewhere real. Nothing here is a test, and you can leave anything blank.</p>
+
+      <form id="intake" data-fx="up" novalidate>
+
+        <!-- which door -->
+        <fieldset class="fs full">
+          <legend>Which are you here for?</legend>
+          <div class="choice">
+            <label class="opt"><input type="radio" name="track" value="coaching" checked><span>Personal coaching</span></label>
+            <label class="opt"><input type="radio" name="track" value="consulting"><span>Consulting for my organization</span></label>
+          </div>
+        </fieldset>
+
+        <div class="f"><label for="i-name">Name</label><input id="i-name" name="name" type="text" autocomplete="name" placeholder="Your name" required></div>
+        <div class="f"><label for="i-mail">Email</label><input id="i-mail" name="email" type="email" autocomplete="email" placeholder="you@example.com" required></div>
+        <div class="f"><label for="i-phone">Phone <em>optional</em></label><input id="i-phone" name="phone" type="tel" autocomplete="tel" placeholder="(555) 555-5555"></div>
+        <div class="f"><label for="i-where">Where you are based</label><input id="i-where" name="location" type="text" placeholder="City, or time zone"></div>
+
+        <!-- ── coaching branch ── -->
+        <div class="branch" data-track="coaching">
+          <fieldset class="fs full">
+            <legend>Which of these sounds closest to where you are standing?</legend>
+            <div class="choice grid">
+              <label class="opt"><input type="checkbox" name="situation" value="Transition"><span>Transition</span></label>
+              <label class="opt"><input type="checkbox" name="situation" value="Uncertainty"><span>Uncertainty</span></label>
+              <label class="opt"><input type="checkbox" name="situation" value="Misalignment"><span>Misalignment</span></label>
+              <label class="opt"><input type="checkbox" name="situation" value="Major decisions"><span>Major decisions</span></label>
+              <label class="opt"><input type="checkbox" name="situation" value="Personal growth"><span>Personal growth</span></label>
+              <label class="opt"><input type="checkbox" name="situation" value="A changing season"><span>A changing season</span></label>
+              <label class="opt"><input type="checkbox" name="situation" value="What comes next"><span>&ldquo;What comes next?&rdquo;</span></label>
+            </div>
+          </fieldset>
+
+          <div class="f full"><label for="i-now">What made you reach out now?</label>
+            <textarea id="i-now" name="why_now" placeholder="A few sentences is plenty. There is no correct way to write this."></textarea></div>
+
+          <div class="f full"><label for="i-six">If six months from now something were different, what would it be?</label>
+            <textarea id="i-six" name="six_months" placeholder="Even a rough answer helps."></textarea></div>
+
+          <div class="f"><label for="i-offer">Where you would like to start</label>
+            <select id="i-offer" name="offer">
+              <option>The First Conversation — 90 minutes, $200</option>
+              <option>The Well-Lit Path Journey — eight sessions, $1,200</option>
+              <option>Not sure yet — help me decide</option>
+            </select>
+          </div>
+
+          <div class="f"><label for="i-worked">Have you worked with a coach before?</label>
+            <select id="i-worked" name="prior">
+              <option>No, this would be a first</option>
+              <option>Yes, some time ago</option>
+              <option>Yes, currently or recently</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- ── consulting branch ── -->
+        <div class="branch" data-track="consulting" hidden>
+          <div class="f"><label for="i-org">Organization</label><input id="i-org" name="org" type="text" placeholder="Where you work"></div>
+          <div class="f"><label for="i-role">Your role</label><input id="i-role" name="role" type="text" placeholder="What you do there"></div>
+
+          <fieldset class="fs full">
+            <legend>Who are you looking to develop?</legend>
+            <div class="choice grid">
+              <label class="opt"><input type="checkbox" name="audience" value="Instructors"><span>Instructors</span></label>
+              <label class="opt"><input type="checkbox" name="audience" value="Corporate trainers"><span>Corporate trainers</span></label>
+              <label class="opt"><input type="checkbox" name="audience" value="Facilitators"><span>Facilitators</span></label>
+              <label class="opt"><input type="checkbox" name="audience" value="Subject-matter experts"><span>Subject-matter experts</span></label>
+              <label class="opt"><input type="checkbox" name="audience" value="Speakers"><span>Speakers</span></label>
+              <label class="opt"><input type="checkbox" name="audience" value="Leadership team"><span>Leadership team</span></label>
+            </div>
+          </fieldset>
+
+          <div class="f full"><label for="i-challenge">What is the learning challenge in front of you?</label>
+            <textarea id="i-challenge" name="challenge" placeholder="What is happening now, and what you would like to be happening instead."></textarea></div>
+
+          <div class="f"><label for="i-size">How many people</label>
+            <select id="i-size" name="group_size">
+              <option>1–5</option><option>6–15</option><option>16–40</option><option>40+</option><option>Not sure yet</option>
+            </select>
+          </div>
+
+          <div class="f"><label for="i-format">Format you have in mind</label>
+            <select id="i-format" name="format">
+              <option>Not sure yet — let's talk it through</option>
+              <option>One-on-one instructor coaching</option>
+              <option>Workshop or intensive</option>
+              <option>Ongoing program</option>
+              <option>Learning design or curriculum review</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- shared tail -->
+        <div class="f"><label for="i-when">Timing</label>
+          <select id="i-when" name="timing">
+            <option>As soon as there is space</option>
+            <option>Within the next month</option>
+            <option>Next quarter</option>
+            <option>Just exploring for now</option>
           </select>
         </div>
-        <div class="f full"><label for="c-msg">Where you are right now</label><textarea id="c-msg" placeholder="A few sentences is plenty. There is no correct way to write this."></textarea></div>
-        <div class="f full"><button class="btn btn-solid btn-lg" type="button" style="align-self:flex-start">Send my note</button></div>
-        <p class="form-note">Tobias reads every note himself and replies within two business days.</p>
+        <div class="f"><label for="i-heard">How you found Tobias</label>
+          <select id="i-heard" name="heard">
+            <option>A referral</option><option>Search</option><option>Social media</option>
+            <option>Heard him speak</option><option>Worked together before</option><option>Other</option>
+          </select>
+        </div>
+
+        <div class="f full"><label for="i-any">Anything else he should know <em>optional</em></label>
+          <textarea id="i-any" name="anything" placeholder="Anything at all."></textarea></div>
+
+        <div class="f full form-actions">
+          <button class="btn btn-solid btn-lg" type="submit">Send my intake</button>
+          <span class="form-status" id="i-status" role="status"></span>
+        </div>
+        <p class="form-note">Tobias reads every one himself and replies within two business days. Nothing you write here is shared with anyone.</p>
       </form>
     </div>
   </section>
@@ -2608,6 +2782,96 @@ body[data-page="contact"] footer > .torn.top{display:none}
       window.Calendly.initPopupWidget({url: a.getAttribute('href')});
     }
   });
+
+
+  /* ── "If you are standing here" chips → popover ───────── */
+  (function(){
+    var wrap = document.querySelector('.chip-wrap');
+    if (!wrap) return;
+    var chips = wrap.querySelector('#standChips'),
+        pop   = wrap.querySelector('#stand-pop'),
+        open  = null;
+
+    function close(){
+      pop.classList.remove('show');
+      chips.querySelectorAll('.chip').forEach(function(c){
+        c.classList.remove('on'); c.setAttribute('aria-expanded','false');
+      });
+      open = null;
+    }
+    function place(btn){
+      var w = wrap.getBoundingClientRect(), r = btn.getBoundingClientRect(), pw = pop.offsetWidth;
+      var left = Math.max(0, Math.min(r.left - w.left + r.width/2 - pw/2, w.width - pw));
+      pop.style.left = left + 'px';
+      pop.style.top  = (r.bottom - w.top + 12) + 'px';
+      var caret = r.left - w.left + r.width/2 - left - 7;
+      pop.querySelector('i').style.left = Math.max(14, Math.min(caret, pw - 28)) + 'px';
+    }
+
+    chips.addEventListener('click', function(e){
+      var btn = e.target.closest('.chip'); if (!btn) return;
+      if (open === btn){ close(); return; }
+      close();
+      open = btn;
+      btn.classList.add('on'); btn.setAttribute('aria-expanded','true');
+      pop.querySelector('b').textContent = btn.textContent.trim();
+      pop.querySelector('p').textContent = btn.dataset.pop;
+      pop.classList.add('show');
+      place(btn);
+    });
+    document.addEventListener('click', function(e){ if (!e.target.closest('.chip-wrap')) close(); });
+    document.addEventListener('keydown', function(e){ if (e.key === 'Escape') close(); });
+    window.addEventListener('resize', function(){ if (open) place(open); });
+  })();
+
+
+  /* ── intake form: branch, validate, confirm ───────────── */
+  (function(){
+    var form = document.getElementById('intake');
+    if (!form) return;
+    var status = document.getElementById('i-status');
+
+    function showBranch(){
+      var track = form.querySelector('input[name="track"]:checked').value;
+      form.querySelectorAll('.branch').forEach(function(b){
+        var on = b.dataset.track === track;
+        b.hidden = !on;
+        b.querySelectorAll('input,select,textarea').forEach(function(el){ el.disabled = !on; });
+      });
+    }
+    form.querySelectorAll('input[name="track"]').forEach(function(r){
+      r.addEventListener('change', showBranch);
+    });
+    showBranch();
+
+    form.addEventListener('submit', function(e){
+      e.preventDefault();
+      var bad = null;
+      form.querySelectorAll('[required]').forEach(function(el){
+        var empty = !el.value.trim() || (el.type === 'email' && el.value.indexOf('@') < 1);
+        el.classList.toggle('err', empty);
+        if (empty && !bad) bad = el;
+      });
+      if (bad){
+        status.textContent = 'Please add your name and email';
+        bad.focus();
+        return;
+      }
+      status.textContent = '';
+      var name = (form.querySelector('#i-name').value || '').trim().split(' ')[0];
+      var done = document.createElement('div');
+      done.className = 'sent';
+      done.innerHTML = '<h3>Thank you' + (name ? ', ' + name : '') + '</h3>' +
+        '<p>Your note is with Tobias. He reads every one himself and will reply within two business days ' +
+        '\u2014 usually sooner. If it is urgent, say so in a follow-up and he will move it up.</p>';
+      form.replaceWith(done);
+      done.scrollIntoView({block:'center', behavior:'smooth'});
+    });
+
+    form.addEventListener('input', function(e){
+      if (e.target.classList.contains('err')) e.target.classList.remove('err');
+    });
+  })();
 
   /* ── router ───────────────────────────────────────────── */
   var PAGES = ['home','about','coaching','consulting','resources','contact'];
