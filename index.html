@@ -990,13 +990,13 @@ header.nav.onDark:not(.scrolled) .nav-links a.nav-cta:hover{
 /* ═══ testimonials ═══ */
 .quotes{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(16px,2.2vw,28px);margin-top:clamp(36px,4.6vw,60px)}
 .qcard{
-  position:relative;margin:0;padding:clamp(46px,4vw,58px) clamp(26px,2.6vw,36px) clamp(26px,2.6vw,34px);
+  position:relative;margin:0;padding:clamp(52px,4.6vw,68px) clamp(26px,2.6vw,36px) clamp(26px,2.6vw,34px);
   border:1px solid var(--line-soft);background:linear-gradient(180deg,var(--paper-2),var(--paper));
   display:flex;flex-direction:column;
   transition:transform .55s cubic-bezier(.2,.8,.2,1),border-color .5s,box-shadow .5s;
 }
 .qcard::before{
-  content:"\201C";position:absolute;left:clamp(20px,2.2vw,30px);top:clamp(4px,.8vw,12px);
+  content:"\201C";position:absolute;left:clamp(20px,2.2vw,30px);top:clamp(16px,1.9vw,28px);
   font-family:'Anton',Impact,'Haettenschweiler','Arial Narrow Bold',var(--util);
   font-size:clamp(58px,5vw,78px);line-height:1;color:var(--copper);opacity:.24;pointer-events:none;
 }
@@ -1255,6 +1255,46 @@ body[data-page="contact"] footer > .torn.top{display:none}
 @media (max-width:760px){
   .band-shot img{aspect-ratio:4/3}
   .band-shot figcaption{font-size:8.5px;letter-spacing:.16em;padding:16px 18px}
+}
+
+
+/* ═══ footer on phones ═══ */
+@media (max-width:760px){
+  /* brand full width, the two link columns side by side beneath it */
+  .f-top{grid-template-columns:1fr 1fr;gap:26px 20px}
+  .f-top > :first-child{grid-column:1 / -1}
+
+  /* the nav rule was shrinking the footer emblem to 38px against a 30px
+     wordmark — size the lockup as a unit instead */
+  footer .brand{gap:14px;align-items:center}
+  footer .brand img.f-em{width:64px;height:64px}
+  footer .lk-main{font-size:22px}
+  footer .lk-the{font-size:9px}
+  footer .lk-path b{font-size:10px}
+  footer .lk-path i{width:15px}
+  footer .lk-sub{font-size:7px}
+
+  footer .f-note{font-size:.95rem;margin-top:1.4rem}
+  .f-vals{font-size:8px;letter-spacing:.14em;gap:6px 12px;margin-top:1.2rem}
+  .f-col h5{margin-bottom:.9rem}
+  .f-col a{padding:7px 0;font-size:.95rem}
+  footer{padding-top:clamp(56px,12vw,84px)}
+  .f-bot{margin-top:30px;gap:8px}
+}
+@media (max-width:400px){
+  footer .brand img.f-em{width:56px;height:56px}
+  footer .lk-main{font-size:19px}
+}
+@media (min-width:761px) and (max-width:1080px){
+  .f-top{grid-template-columns:1fr 1fr;gap:34px}
+  .f-top > :first-child{grid-column:1 / -1}
+  footer .brand{gap:18px}
+  footer .brand img.f-em{width:86px;height:86px}
+  footer .lk-main{font-size:30px}
+  footer .lk-the{font-size:11px}
+  footer .lk-path b{font-size:13px}
+  footer .lk-path i{width:20px}
+  footer .lk-sub{font-size:8.5px}
 }
 
 @media (prefers-reduced-motion:reduce){
