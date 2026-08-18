@@ -788,7 +788,7 @@ footer nav a:hover{color:var(--sand)}
   content:"";flex:0 0 auto;width:1.6em;height:1px;background:var(--sand);opacity:.75;
 }
 .hero-quote::before{
-  content:"\201C";position:absolute;left:.05em;top:.16em;z-index:0;
+  content:"\201C";position:absolute;left:.05em;top:.02em;z-index:0;
   font-family:'Anton',Impact,'Haettenschweiler','Arial Narrow Bold',var(--util);
   font-weight:400;font-size:clamp(120px,11vw,184px);
   line-height:.72;letter-spacing:-.02em;color:var(--sand);opacity:.26;pointer-events:none;
@@ -1409,6 +1409,29 @@ body.modal-open{overflow:hidden}
   .modal-card{margin:0;max-width:100%;min-height:100%;max-height:none;border:0}
 }
 
+
+/* ═══ bio: role line and credentials ═══ */
+.bio-role{
+  font-family:var(--util);font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--copper);margin:0 0 1.5rem;line-height:1.9;
+}
+.creds-title{
+  font-family:var(--util);font-size:9.5px;letter-spacing:.28em;text-transform:uppercase;
+  color:var(--taupe);margin:2.2rem 0 1rem;display:flex;align-items:center;gap:.9em;
+}
+.creds-title::after{content:"";flex:1;height:1px;max-width:160px;
+  background:linear-gradient(90deg,var(--line-soft),transparent)}
+.creds{list-style:none;padding:0;margin:0;display:grid;gap:.55rem}
+.creds li{position:relative;padding-left:1.7em;font-size:.97rem;color:var(--body)}
+.creds li::before{content:"";position:absolute;left:0;top:.72em;width:1.05em;height:1px;background:var(--copper)}
+.dark .creds li{color:#CBBBA9}
+.dark .creds li::before{background:var(--sand)}
+.dark .creds-title{color:var(--sand)}
+@media (max-width:760px){
+  .bio-role{font-size:9.5px;letter-spacing:.16em;line-height:1.8}
+  .creds li{font-size:.94rem;padding-left:1.5em}
+}
+
 @media (prefers-reduced-motion:reduce){
   *{animation-duration:.01ms !important;transition-duration:.01ms !important}
 }
@@ -1584,10 +1607,20 @@ body.modal-open{overflow:hidden}
           <p class="eyebrow" data-fx="eyebrow">Meet Tobias</p>
           <h2 class="h-lg" data-fx="lines"><span class="line-mask"><span>Guiding you toward</span></span><span class="line-mask"><span>what matters most</span></span></h2>
           <div data-fx="up">
-            <p>Tobias has spent his working life in rooms where people learn something about themselves — classrooms, training floors, hard conversations, quiet turning points.</p>
-            <p>The work has always been the same. Listen first. Ask the question that matters. Offer perspective. Challenge when challenging helps. And help people see what has become difficult to see alone.</p>
+            <p class="bio-role">Founder &nbsp;|&nbsp; Coach &nbsp;|&nbsp; Adult Learning &amp; Instructor Development Consultant</p>
+            <p>Tobias Neal is an educator, coach, and consultant with more than two decades of experience spanning military service, adult education, instructor development, curriculum design, and organizational leadership.</p>
+            <p>His work combines the science of adult learning with the human side of growth and development — helping individuals find greater clarity in their lives, and helping those entrusted with developing others become better at their craft.</p>
             <p>He is not walking ahead of you with a map. He is walking beside you, carrying the light.</p>
-            <p style="margin-top:2rem"><a class="btn btn-ghost" href="#/about" data-go="about">Learn more about Tobias</a></p>
+
+            <p class="creds-title">Credentials &amp; Background</p>
+            <ul class="creds">
+              <li>M.S., Organizational Leadership &amp; Consulting</li>
+              <li>A.A., Instructional Systems Design</li>
+              <li>U.S. Air Force Veteran</li>
+              <li>Master Instructor, Air Education and Training Command</li>
+            </ul>
+
+            <p style="margin-top:2.2rem"><a class="btn btn-ghost" href="#/about" data-go="about">Learn more about Tobias</a></p>
           </div>
         </div>
       </div>
@@ -3042,7 +3075,21 @@ body.modal-open{overflow:hidden}
 
   document.addEventListener('click', function(e){
     var a = e.target.closest('a[data-go]');
-    if (a){ closeMenu(); return; }
+    if (a){
+      // don't rely on hashchange: tapping a link whose hash already matches
+      // fires no event, so the logo did nothing once you were on that page
+      e.preventDefault();
+      closeMenu();
+      var name = a.dataset.go;
+      if (name === current){
+        window.scrollTo({top:0, behavior: REDUCED ? 'auto' : 'smooth'});
+      } else if (location.hash !== '#/' + name){
+        location.hash = '#/' + name;
+      } else {
+        show(name);
+      }
+      return;
+    }
     var s = e.target.closest('a[data-scroll]');
     if (s){
       e.preventDefault();
