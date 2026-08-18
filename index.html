@@ -2335,7 +2335,8 @@ body.modal-open{overflow:hidden}
     if (!q || !h) return;
     q.style.marginTop = '0px';
     if (window.innerWidth <= 1080) return;
-    var d = h.getBoundingClientRect().top - q.getBoundingClientRect().top;
+    // sit a little above the headline's cap line rather than flush with it
+    var d = h.getBoundingClientRect().top - q.getBoundingClientRect().top - 34;
     if (d > 0) q.style.marginTop = Math.round(d) + 'px';
   }
 
