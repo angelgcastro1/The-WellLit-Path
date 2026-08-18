@@ -117,8 +117,31 @@ html{-webkit-text-size-adjust:100%}
   header.nav::after{display:none}
 }
 @media (max-width:1000px){
+  /* the open menu is a cream panel — the dark-hero colours must not carry over */
+  header.nav.onDark:not(.scrolled) .nav-links.open a{color:var(--ink)}
+  header.nav.onDark:not(.scrolled) .nav-links.open a.btn{color:var(--paper)}
+  header.nav.onDark .nav-links.open ~ .brand .lk-the,
+  header.nav.onDark .nav-links.open ~ .brand .lk-main{color:var(--ink)}
+  header.nav .nav-links.open a{color:var(--ink)}
+  header.nav .nav-links.open a.on{color:var(--copper)}
+  header.nav .nav-links.open a.btn{color:var(--paper)}
   /* keep the logo tappable above the open menu overlay */
   .brand{gap:8px;position:relative;z-index:3}
+  /* menu open: logo stays large and left-aligned, never centred or shrunk */
+  header.nav.menu-open .brand{transform:none !important}
+  header.nav.menu-open .nav-in{padding-top:18px;padding-bottom:18px}
+  header.nav.menu-open .brand img{width:64px;height:64px}
+  header.nav.menu-open .lk-main{font-size:24px}
+  header.nav.menu-open .lk-the{font-size:9.5px}
+  header.nav.menu-open .lk-path b{font-size:11px}
+  header.nav.menu-open .lk-path i{width:19px}
+  header.nav.menu-open .lk-sub{font-size:7.5px}
+  header.nav.menu-open .lk-the,
+  header.nav.menu-open .lk-main{color:var(--ink) !important}
+  header.nav.menu-open .lk-path b{color:var(--copper) !important}
+  header.nav.menu-open .lk-path i{background:var(--copper) !important}
+  header.nav.menu-open .lk-sub{color:var(--taupe) !important}
+  header.nav.menu-open .burger i{background:var(--ink) !important}
   .lk-path{margin-top:2px}
   .lk-sub{margin-top:1px}
   .burger{display:flex;position:absolute;right:var(--gut);top:50%;transform:translateY(-50%);margin:0}
@@ -130,16 +153,17 @@ html{-webkit-text-size-adjust:100%}
   header.nav.scrolled .nav-in{padding-top:13px;padding-bottom:13px}
   /* grown + centred via one composited transform (set in JS) */
   .nav-links{
-    position:fixed;inset:0 0 auto;top:0;padding:110px var(--gut) 48px;background:var(--paper);
-    flex:none;margin-left:0;flex-direction:column;align-items:flex-start;gap:4px;
+    position:fixed;inset:0 0 auto;top:0;padding:104px var(--gut) 34px;background:var(--paper);
+    flex:none;margin-left:0;flex-direction:column;align-items:flex-start;gap:2px;
     transform:translateY(-101%);transition:transform .6s cubic-bezier(.2,.8,.2,1);
-    height:100dvh;justify-content:center;overflow-y:auto;
+    height:100dvh;justify-content:center;overflow:hidden;
   }
   .nav-links.open{transform:translateY(0)}
-  .nav-links a{font-size:clamp(15px,2.4vw,19px);letter-spacing:.24em;padding:16px 0}
+  .nav-links a{font-size:clamp(15px,2.2vw,19px);letter-spacing:.24em;padding:clamp(9px,1.6vh,16px) 0}
   .nav-mid{flex-direction:column;align-items:flex-start;gap:2px;transform:none !important;
     position:static !important;width:100%}
-  .nav-links a.nav-cta{margin:26px 0 0;width:100%;justify-content:center;padding-top:18px;padding-bottom:18px}
+  .nav-links a.nav-cta{margin:clamp(14px,2.4vh,26px) 0 0;width:100%;justify-content:center;
+    padding-top:clamp(13px,1.9vh,18px);padding-bottom:clamp(13px,1.9vh,18px)}
   header.nav:not(.scrolled) .nav-in{padding-top:18px;padding-bottom:18px}
   header.nav:not(.scrolled) .brand img{width:58px;height:58px}
   header.nav:not(.scrolled) .lk-the{font-size:9px}
@@ -1183,8 +1207,31 @@ body[data-page="contact"] footer > .torn.top{display:none}
   header.nav::after{display:none}
 }
 @media (max-width:1000px){
+  /* the open menu is a cream panel — the dark-hero colours must not carry over */
+  header.nav.onDark:not(.scrolled) .nav-links.open a{color:var(--ink)}
+  header.nav.onDark:not(.scrolled) .nav-links.open a.btn{color:var(--paper)}
+  header.nav.onDark .nav-links.open ~ .brand .lk-the,
+  header.nav.onDark .nav-links.open ~ .brand .lk-main{color:var(--ink)}
+  header.nav .nav-links.open a{color:var(--ink)}
+  header.nav .nav-links.open a.on{color:var(--copper)}
+  header.nav .nav-links.open a.btn{color:var(--paper)}
   /* keep the logo tappable above the open menu overlay */
   .brand{gap:8px;position:relative;z-index:3}
+  /* menu open: logo stays large and left-aligned, never centred or shrunk */
+  header.nav.menu-open .brand{transform:none !important}
+  header.nav.menu-open .nav-in{padding-top:18px;padding-bottom:18px}
+  header.nav.menu-open .brand img{width:64px;height:64px}
+  header.nav.menu-open .lk-main{font-size:24px}
+  header.nav.menu-open .lk-the{font-size:9.5px}
+  header.nav.menu-open .lk-path b{font-size:11px}
+  header.nav.menu-open .lk-path i{width:19px}
+  header.nav.menu-open .lk-sub{font-size:7.5px}
+  header.nav.menu-open .lk-the,
+  header.nav.menu-open .lk-main{color:var(--ink) !important}
+  header.nav.menu-open .lk-path b{color:var(--copper) !important}
+  header.nav.menu-open .lk-path i{background:var(--copper) !important}
+  header.nav.menu-open .lk-sub{color:var(--taupe) !important}
+  header.nav.menu-open .burger i{background:var(--ink) !important}
   .lk-path{margin-top:2px}
   .lk-sub{margin-top:1px}
   .burger{display:flex;position:absolute;right:var(--gut);top:50%;transform:translateY(-50%);margin:0}
@@ -1196,16 +1243,17 @@ body[data-page="contact"] footer > .torn.top{display:none}
   header.nav.scrolled .nav-in{padding-top:13px;padding-bottom:13px}
   /* grown + centred via one composited transform (set in JS) */
   .nav-links{
-    position:fixed;inset:0 0 auto;top:0;padding:110px var(--gut) 48px;background:var(--paper);
-    flex:none;margin-left:0;flex-direction:column;align-items:flex-start;gap:4px;
+    position:fixed;inset:0 0 auto;top:0;padding:104px var(--gut) 34px;background:var(--paper);
+    flex:none;margin-left:0;flex-direction:column;align-items:flex-start;gap:2px;
     transform:translateY(-101%);transition:transform .6s cubic-bezier(.2,.8,.2,1);
-    height:100dvh;justify-content:center;overflow-y:auto;
+    height:100dvh;justify-content:center;overflow:hidden;
   }
   .nav-links.open{transform:translateY(0)}
-  .nav-links a{font-size:clamp(15px,2.4vw,19px);letter-spacing:.24em;padding:16px 0}
+  .nav-links a{font-size:clamp(15px,2.2vw,19px);letter-spacing:.24em;padding:clamp(9px,1.6vh,16px) 0}
   .nav-mid{flex-direction:column;align-items:flex-start;gap:2px;transform:none !important;
     position:static !important;width:100%}
-  .nav-links a.nav-cta{margin:26px 0 0;width:100%;justify-content:center;padding-top:18px;padding-bottom:18px}
+  .nav-links a.nav-cta{margin:clamp(14px,2.4vh,26px) 0 0;width:100%;justify-content:center;
+    padding-top:clamp(13px,1.9vh,18px);padding-bottom:clamp(13px,1.9vh,18px)}
   header.nav:not(.scrolled) .nav-in{padding-top:18px;padding-bottom:18px}
   header.nav:not(.scrolled) .brand img{width:58px;height:58px}
   header.nav:not(.scrolled) .lk-the{font-size:9px}
@@ -3226,9 +3274,11 @@ body.modal-open{overflow:hidden}
     // home travels in on scroll; inner pages are parked at the same spot from the start
     mid.style.transform = 'translateX(' + ((!isHome || nav.classList.contains('scrolled')) ? navShift : 0) + 'px)';
   }
-  function closeMenu(){ links.classList.remove('open'); burger.classList.remove('x'); }
+  function closeMenu(){ links.classList.remove('open'); burger.classList.remove('x');
+    nav.classList.remove('menu-open'); }
   burger.addEventListener('click', function(){
     links.classList.toggle('open'); burger.classList.toggle('x');
+    nav.classList.toggle('menu-open', links.classList.contains('open'));
   });
 
   var ticking = false;
