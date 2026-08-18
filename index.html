@@ -1318,12 +1318,19 @@ body[data-page="contact"] footer > .torn.top{display:none}
 .chip-wrap{position:relative}
 button.chip{
   font:inherit;font-family:var(--util);font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;
-  padding:13px 20px;border:1px solid var(--line-soft);background:var(--paper-2);color:var(--ink-2);
-  cursor:pointer;transition:transform .4s cubic-bezier(.2,.8,.2,1),background .4s,border-color .4s,color .4s;
+  padding:13px 20px;border:1px solid var(--ink);background:var(--ink);color:#E9DCCB;
+  cursor:pointer;box-shadow:0 2px 8px rgba(28,46,36,.10);
+  transition:transform .4s cubic-bezier(.2,.8,.2,1),background .4s,border-color .4s,color .4s,box-shadow .4s;
 }
-button.chip:hover{border-color:rgba(163,111,59,.45);transform:translateY(-2px)}
+button.chip:hover{
+  background:var(--ink-2);border-color:var(--copper-lt);color:#F4EADD;
+  transform:translateY(-2px);box-shadow:0 10px 22px -10px rgba(28,46,36,.4);
+}
 button.chip:focus-visible{outline:2px solid var(--copper);outline-offset:3px}
-button.chip.on{background:var(--olive);border-color:var(--olive);color:#F4EADD;transform:translateY(-2px)}
+button.chip.on{
+  background:var(--copper);border-color:var(--copper);color:#FBF5EE;transform:translateY(-2px);
+  box-shadow:0 10px 24px -10px rgba(163,111,59,.55);
+}
 .pop{
   position:absolute;z-index:6;max-width:min(430px,86vw);
   background:var(--ink);color:#E9DCCB;padding:22px 24px;
