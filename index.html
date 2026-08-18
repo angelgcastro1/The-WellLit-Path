@@ -395,7 +395,7 @@ header.nav:not(.scrolled) .lockup{transform:scale(1.42)}
 
 /* ─────────── the spine (signature) ─────────── */
 #spine{position:absolute;top:0;left:max(0px,calc(50% - min(50vw,620px) - 78px));width:var(--spine);z-index:60;pointer-events:none;overflow:visible}
-@media (max-width:1080px){ #spine{position:fixed;left:0;width:26px;height:100vh} }
+@media (max-width:1080px){ #spine{position:absolute;left:0;width:26px} }
 @media (max-width:600px){ #spine{left:0;width:20px;opacity:.85} }
 #spine .base{fill:none;stroke:rgba(147,121,96,.34);stroke-width:1.2;stroke-dasharray:5 7;stroke-linecap:round}
 #spine .lit{fill:none;stroke:var(--copper);stroke-width:1.6;stroke-linecap:round}
@@ -404,8 +404,8 @@ header.nav:not(.scrolled) .lockup{transform:scale(1.42)}
 #spine .halo{fill:rgba(192,142,86,.12)}
 #lantern{opacity:0;will-change:transform;transform-box:fill-box;transform-origin:center}
 @media (max-width:1080px){
-  #lantern{transition:transform .45s linear}
-  #spine .lit{transition:stroke-dashoffset .45s linear}
+  /* no lit-trail repaint on touch devices — the lantern alone carries it */
+  #spine .lit{display:none}
 }
 #lantern .core{fill:#FFF3E0}
 #lantern .glow1{fill:rgba(255,214,150,.42)}
@@ -2432,17 +2432,10 @@ body.modal-open{overflow:hidden}
 
     s.innerHTML = ''; s.style.height = '0px'; s.style.top = '0px';
 
-    var off = 0, H;
-    if (narrow){
-      // one viewport tall and fixed: the repaint area stays small, so the
-      // dash animation costs the same no matter how long the page is
-      H = Math.round(window.innerHeight);
-    } else {
-      var heroDark = page.querySelector('.hero-dark');
-      off = heroDark ? Math.round(heroDark.getBoundingClientRect().height) - 40 : 0;
-      var foot = document.querySelector('footer');
-      H = page.offsetHeight + (foot ? foot.offsetHeight : 0) - off;
-    }
+    var heroDark = page.querySelector('.hero-dark');
+    var off = heroDark ? Math.round(heroDark.getBoundingClientRect().height) - 40 : 0;
+    var foot = document.querySelector('footer');
+    var H = page.offsetHeight + (foot ? foot.offsetHeight : 0) - off;
     spine.off = off;
     if (H < 200){ spine.active = false; return; }
     spine.H = H;
@@ -2505,17 +2498,13 @@ body.modal-open{overflow:hidden}
   }
 
   function spineTarget(){
-    if (spine.narrow){
-      var max = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
-      return Math.max(0, Math.min(1, window.scrollY / max));
-    }
     var y = window.scrollY + window.innerHeight * 0.5 - spine.off;
     return Math.max(0, Math.min(1, y / spine.H));
   }
 
   function drawSpine(){
     var p = spine.cur;
-    spine.lit.style.strokeDashoffset = (spine.len * (1 - p)).toFixed(1);
+    if (!spine.narrow) spine.lit.style.strokeDashoffset = (spine.len * (1 - p)).toFixed(1);
 
     var f = p * spine.N, i = f | 0, r = f - i,
         j = i < spine.N ? i + 1 : i,
@@ -2544,20 +2533,10 @@ body.modal-open{overflow:hidden}
     spine.raf = requestAnimationFrame(spineFrame);
   }
 
-  var spineTick = 0;
   function paintSpine(){
     if (!spine.active || !spine.lit) return;
     spine.target = spineTarget();
-
-    if (spine.narrow || REDUCED){
-      // no rAF loop on touch devices: one write every ~180ms, CSS eases the rest
-      var now = Date.now();
-      if (now - spineTick < 180) return;
-      spineTick = now;
-      spine.cur = spine.target;
-      drawSpine();
-      return;
-    }
+    if (REDUCED){ spine.cur = spine.target; drawSpine(); return; }
     if (!spine.raf) spine.raf = requestAnimationFrame(spineFrame);
   }
 
