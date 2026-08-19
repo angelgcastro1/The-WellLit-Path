@@ -754,11 +754,11 @@ footer nav a:hover{color:var(--sand)}
 /* ═══ dark hero ═══ */
 .wrap-wide{max-width:1560px;margin:0 auto;padding:0 var(--gut) 0 calc(var(--gut) + var(--rail));position:relative;z-index:3}
 .hero-dark{position:relative;overflow:hidden;background:#0D1811;isolation:isolate;contain:paint}
-.hero-pic{position:absolute;top:0;left:0;width:100%;height:122%;z-index:0;display:block}
+.hero-pic{position:absolute;top:0;left:0;width:100%;height:108%;z-index:0;display:block}
 .hero-pic .hero-shot{position:absolute;inset:0;width:100%;height:100%}
 .hero-shot{
   filter:brightness(1.24) contrast(1.05) saturate(1.06);
-  position:absolute;top:0;left:0;width:100%;height:122%;max-width:none;z-index:0;
+  position:absolute;top:0;left:0;width:100%;height:108%;max-width:none;z-index:0;
   object-fit:cover;object-position:74% top;
   backface-visibility:hidden;
 }
@@ -2657,7 +2657,7 @@ body.modal-open{overflow:hidden}
       gsap.utils.toArray(page.querySelectorAll('[data-fx="shot"]')).forEach(function(el){
         if (TOUCH) gsap.from(el, {opacity:0, duration:.7, ease:'power2.out'});
         else gsap.from(el, {opacity:0, scale:1.07, duration:2.2, ease:'power3.out'});
-        if (PARALLAX) gsap.to(el, {yPercent:-9, force3D:true, ease:'none',
+        if (PARALLAX) gsap.to(el, {yPercent:-6, force3D:true, ease:'none',
           scrollTrigger:{trigger:'.hero-dark', start:'top top', end:'bottom top', scrub:true}});
       });
 
