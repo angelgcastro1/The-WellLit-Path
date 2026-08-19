@@ -405,6 +405,10 @@ header.nav:not(.scrolled) .lockup{transform:scale(1.42)}
 .btn-ghost{border-color:var(--line);color:var(--ink-2)}
 .btn-ghost::before{background:var(--ink)}
 .btn-ghost:hover{color:#F0E4D6;border-color:var(--ink)}
+/* inverted: solid ink at rest, wipes to paper on hover */
+.btn-invert{background:var(--ink);border-color:var(--ink);color:var(--cream)}
+.btn-invert::before{background:var(--paper)}
+.btn-invert:hover{color:var(--ink);border-color:var(--ink)}
 .dark .btn-ghost,.hero-dark .btn-ghost{border-color:rgba(200,172,146,.42);color:#E4D8C8}
 .dark .btn-ghost::before,.hero-dark .btn-ghost::before{background:var(--sand)}
 .dark .btn-ghost:hover,.hero-dark .btn-ghost:hover{color:var(--ink);border-color:var(--sand)}
@@ -1724,7 +1728,7 @@ body.modal-open{overflow:hidden}
               <li>Master Instructor, Air Education and Training Command</li>
             </ul>
 
-            <p style="margin-top:2.2rem"><a class="btn btn-ghost" href="#/about" data-go="about">Learn more about Tobias</a></p>
+            <p style="margin-top:2.2rem"><a class="btn btn-invert" href="#/about" data-go="about">Learn more about Tobias</a></p>
           </div>
         </div>
       </div>
