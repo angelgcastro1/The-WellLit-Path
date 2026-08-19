@@ -1410,8 +1410,8 @@ button.chip{
   transition:transform .4s cubic-bezier(.2,.8,.2,1),background .4s,border-color .4s,color .4s,box-shadow .4s;
 }
 button.chip:hover{
-  background:var(--ink-2);border-color:var(--copper-lt);color:#F4EADD;
-  transform:translateY(-2px);box-shadow:0 10px 22px -10px rgba(28,46,36,.4);
+  background:var(--copper);border-color:var(--copper);color:#FBF5EE;
+  transform:translateY(-2px);box-shadow:0 10px 24px -10px rgba(163,111,59,.55);
 }
 button.chip:focus-visible{outline:2px solid var(--copper);outline-offset:3px}
 button.chip.on{
@@ -1531,6 +1531,10 @@ body.modal-open{overflow:hidden}
   .creds li{font-size:.94rem;padding-left:1.5em}
 }
 
+/* hero lede: break after "confidence," on desktop, natural wrap on small screens */
+.lede-br{display:none}
+@media (min-width:1081px){ .lede-br{display:inline} }
+
 @media (prefers-reduced-motion:reduce){
   *{animation-duration:.01ms !important;transition-duration:.01ms !important}
 }
@@ -1608,7 +1612,7 @@ body.modal-open{overflow:hidden}
           <i></i>
         </span>
         <p class="values"><span>Clarity</span><i></i><span>Direction</span><i></i><span>Growth</span><i></i><span>Purpose</span><i></i><span>Presence</span></p>
-        <p class="lede" data-fx="up">Coaching and consulting for clarity, confidence, and a life aligned with purpose.</p>
+        <p class="lede" data-fx="up">Coaching and consulting for clarity, confidence,<br class="lede-br"> and a life aligned with purpose.</p>
         <div class="hero-cta" data-fx="up">
           <button class="btn btn-solid btn-lg" type="button" data-intake>Start Your Journey</button>
           <a class="btn btn-ghost btn-lg" href="#/consulting" data-go="consulting">Explore Consulting</a>
@@ -2706,9 +2710,11 @@ body.modal-open{overflow:hidden}
       /* value pillars — the ring wipes in, then each icon draws itself */
       var pils = page.querySelectorAll('[data-fx="pil"]');
       if (pils.length){
-        var played = false;
+        var running = false;
         var run = function(){
-          if (played) return; played = true;
+          if (running) return;
+          running = true;
+          setTimeout(function(){ running = false; }, 200);
           pils.forEach(function(pil, i){
             var d = i * 0.13;
             var ring = pil.querySelector('.ring'),
@@ -2736,15 +2742,25 @@ body.modal-open{overflow:hidden}
         gsap.set(page.querySelectorAll('.pil .badge svg'), {opacity:0});
         gsap.set(page.querySelectorAll('.pil h4, .pil p'), {opacity:0, y:10});
 
+        var reset = function(){
+          gsap.killTweensOf(page.querySelectorAll('.pil .ring, .pil .badge svg, .pil .badge svg > *, .pil h4, .pil p'));
+          gsap.set(page.querySelectorAll('.pil .ring'), {clipPath:'inset(0% 0% 100% 0%)'});
+          gsap.set(page.querySelectorAll('.pil .badge svg'), {opacity:0});
+          gsap.set(page.querySelectorAll('.pil h4, .pil p'), {opacity:0, y:10});
+        };
+
         if (REDUCED){
           gsap.set(page.querySelectorAll('.pil .ring'), {clipPath:'inset(0% 0% 0% 0%)'});
           gsap.set(page.querySelectorAll('.pil .badge svg'), {opacity:1});
           gsap.set(page.querySelectorAll('.pil h4, .pil p'), {opacity:1, y:0});
         } else {
           var st = ScrollTrigger.create({
-            trigger: pils[0], start:'top 88%',
-            onEnter: run,
-            onRefresh: function(self){ if (self.isActive) run(); }
+            trigger: pils[0], start:'top 88%', end:'bottom 12%',
+            onEnter:     function(){ reset(); run(); },   // scrolling down into view
+            onEnterBack: function(){ reset(); run(); },   // scrolling back up into view
+            onLeave:     reset,                            // gone past the bottom
+            onLeaveBack: reset,                            // gone back above it
+            onRefresh:   function(self){ if (self.isActive) run(); }
           });
           if (st.isActive) run();
         }
